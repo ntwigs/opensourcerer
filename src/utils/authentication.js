@@ -1,5 +1,5 @@
 import { Strategy as GitHubStrategy } from 'passport-github'
-import UserSchema from '../schemas/UserModel'
+import UserSchema from '../schemas/UserSchema'
 import passport from 'passport'
 
 passport.serializeUser((user, done) => {
