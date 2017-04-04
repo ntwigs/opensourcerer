@@ -1,0 +1,25 @@
+{
+  "name": "opensourcerer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "backpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NorthernTwig/opensourcerer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NorthernTwig/opensourcerer/issues"
+  },
+  "homepage": "https://github.com/NorthernTwig/opensourcerer#readme",
+  "dependencies": {
+    "backpack-core": "^0.2.1",
+    "express": "^4.15.2"
+  }
+}
