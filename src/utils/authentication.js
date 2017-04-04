@@ -1,5 +1,14 @@
 import { Strategy as GitHubStrategy } from 'passport-github'
+import UserSchema from '../schemas/UserModel'
 import passport from 'passport'
+
+passport.serializeUser((user, done) => {
+  done(null, user)
+})
+
+passport.deserializeUser((user, done) => {
+  done(null, user)
+})
 
 passport.use(new GitHubStrategy({
   clientID: process.env.CLIENT_ID,
@@ -25,6 +34,8 @@ passport.use(new GitHubStrategy({
         new: true
       }
     )
+
+    done(null, profile)
 
   } catch (error) {
     console.log(error)
