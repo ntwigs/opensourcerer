@@ -5,8 +5,5 @@ router
     .get('/', (req, res) => {
         res.send('entry')
     })
-    .get('/login', (req, res) => {
-
-    })
 
 export default router
