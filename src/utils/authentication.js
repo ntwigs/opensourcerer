@@ -4,7 +4,7 @@ import passport from 'passport'
 passport.use(new GitHubStrategy({
   clientID: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
-  callbackURL: 'http://localhost:2999/login/callback'
+  callbackURL: 'http://localhost:3000/login/callback'
 }, async (accessToken, refreshToken, profile, done) => {
   try {
 
