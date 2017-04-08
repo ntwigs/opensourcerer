@@ -13,15 +13,15 @@ const PORT = 3000
 
 app.use(session({
     secret: process.env.SESSION_SECRET,
-    resave: true,
-    saveUninitialized: true
+    resave: false,
+    saveUninitialized: false
 }))
 
 app.use(passport.initialize())
 app.use(passport.session())
 
-app.use(mainRoute)
 app.use(authRoute)
+app.use(mainRoute)
 
 app.listen(PORT, () => {
     console.log(`Up and running on port : ${ PORT }`)

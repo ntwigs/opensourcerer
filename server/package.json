@@ -19,13 +19,20 @@
   },
   "homepage": "https://github.com/NorthernTwig/opensourcerer#readme",
   "dependencies": {
+    "array-indexofobject": "0.0.1",
     "backpack-core": "^0.2.1",
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
     "express-session": "^1.15.2",
+    "feed-read": "0.0.1",
+    "feedparser": "^2.1.0",
     "jsonwebtoken": "^7.3.0",
     "mongoose": "^4.9.3",
     "passport": "^0.3.2",
-    "passport-github": "^1.1.0"
+    "passport-github": "^1.1.0",
+    "readable-stream": "^2.2.8",
+    "request": "^2.81.0",
+    "request-promise": "^4.2.0",
+    "sax": "^1.2.2"
   }
 }
