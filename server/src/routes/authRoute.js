@@ -21,12 +21,12 @@ router
 
         if (!existingUser) await res.redirect('/')
 
-        const token = jwt.sign(
+        const token = await jwt.sign(
           { username: existingUser.username, id: existingUser._id },
           process.env.JWT_SECRET
         )
 
-        res.redirect(`/token=${ token }`)
+        await res.redirect(`http://localhost:3000/?token=${ token }`)
 
       } catch(error) {
         console.log(error)

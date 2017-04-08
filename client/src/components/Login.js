@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import rp from 'request-promise'
+import queryString from 'query-string'
 
 class Login extends Component {
   componentDidMount = () => {
-    const token = this.props.location.query.token || localStorage.getItem('jwt')
-
+    const parsedToken = queryString.parse(this.props.location.search).token
+    const token = parsedToken || localStorage.getItem('jwt')
+    
     if (token) {
       localStorage.setItem('jwt', token)
-      this.props.router.replace({
+      this.props.history.replace({
         pathname: `/users/northerntwig` 
       })
     }
