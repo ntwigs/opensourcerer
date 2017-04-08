@@ -9,7 +9,6 @@ router
       const user = await UserSchema.findOne(
         { username: { $regex: username, $options: 'i' } }
       )
-      console.log(user)
       res.send(user)
     } catch(error) {
       console.log(error)
