@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 class User extends Component {
   state = {
     issues: [],
-    eTag: undefined
+    etag: undefined
   }
 
   componentWillReceiveProps = async () => {
@@ -15,12 +15,25 @@ class User extends Component {
   refreshEvents = async () => {
     try {
       const userEvents = await rp(`https://api.github.com/users/${ this.props.username }/events`, {
-        json: true
+        headers: {
+          'If-None-Match': this.state.etag
+        },
+        json: true,
+        resolveWithFullResponse: true
       })
 
-      this.setState({
-        issues: [...this.state.issues, ...userEvents] 
-      })
+      if (userEvents.headers.etag !== this.state.etag) {
+        const newEvents = userEvents.body.filter(issue => {
+          if (!this.state.issues.includes(issue)) {
+            return issue
+          }
+        })
+
+        this.setState({
+          issues: [...this.state.issues, ...newEvents],
+          etag: userEvents.headers.etag
+        })
+      }
 
       this.restart()
       
@@ -32,6 +45,10 @@ class User extends Component {
 
       this.refreshEvents()
     }
+  }
+
+  replaceEtag = etag => {
+    
   }
 
   restart = (time = 60000) => {
