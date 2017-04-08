@@ -1,11 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Login from './Login'
+import Login from './components/Login'
+import User from './components/User'
+import validateUser from './utils/validateUser'
 import { BrowserRouter as Router, Route, BrowserHistory } from 'react-router-dom'
 
 ReactDOM.render(
   <Router histrory={ BrowserHistory }>
-    <Route path='/' component={ Login }/>
+    <Route exact path='/' component={ Login } />
+    <Route path='/user/:username' component={ User } onEnter={ validateUser } />
   </Router>,
   document.getElementById('root')
 )
