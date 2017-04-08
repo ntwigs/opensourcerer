@@ -5,10 +5,12 @@ const router = express.Router()
 router
   .get('/users/:username', async (req, res) => {
     try {
-      const username = req.params
-
-      const user = await UserSchema.findOne({ username })
-      res.json(user)
+      const username = req.params.username
+      const user = await UserSchema.findOne(
+        { username: { $regex: username, $options: 'i' } }
+      )
+      console.log(user)
+      res.send(user)
     } catch(error) {
       console.log(error)
     }
