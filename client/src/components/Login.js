@@ -5,13 +5,13 @@ import queryString from 'query-string'
 
 class Login extends Component {
   componentDidMount = () => {
-    const parsedToken = queryString.parse(this.props.location.search).token
-    const token = parsedToken || localStorage.getItem('jwt')
-    
-    if (token) {
-      localStorage.setItem('jwt', token)
+    const parsedUsername = queryString.parse(this.props.location.search).username
+    const username = parsedUsername || localStorage.getItem('username')
+
+    if (username) {
+      localStorage.setItem('username', username)
       this.props.history.replace({
-        pathname: `/users/northerntwig` 
+        pathname: `/users/${ username }` 
       })
     }
   }
