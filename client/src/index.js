@@ -7,8 +7,10 @@ import { BrowserRouter as Router, Route, BrowserHistory } from 'react-router-dom
 
 ReactDOM.render(
   <Router histrory={ BrowserHistory }>
-    <Route exact path='/' component={ Login } />
-    <Route path='/user/:username' component={ User } onEnter={ validateUser } />
+    <div className='body-wrapper'>
+      <Route exact path='/' component={ Login } />
+      <Route path='/user/:username' component={ User } onEnter={ validateUser } />
+    </div>
   </Router>,
   document.getElementById('root')
 )

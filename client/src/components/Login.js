@@ -1,12 +1,21 @@
 import React, { Component } from 'react'
-import FeedParser from 'feedparser'
 import rp from 'request-promise'
-import { Link } from 'react-router-dom'
 
 class Login extends Component {
+  componentDidMount = () => {
+    const token = this.props.location.query.token || localStorage.getItem('jwt')
+
+    if (token) {
+      localStorage.setItem('jwt', token)
+      this.props.router.replace({
+        pathname: `/users/northerntwig` 
+      })
+    }
+  }
+
   render() {
     return (
-      <Link to='http://localhost:3000/login'>Login</Link>
+      <a href='http://localhost:3001/login'>Login</a>
     )
   }
 }

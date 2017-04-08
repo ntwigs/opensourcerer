@@ -26,7 +26,7 @@ router
           process.env.JWT_SECRET
         )
 
-        res.redirect(`/jwt=${ token }`)
+        res.redirect(`/token=${ token }`)
 
       } catch(error) {
         console.log(error)
