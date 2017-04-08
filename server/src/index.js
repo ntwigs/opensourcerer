@@ -7,7 +7,6 @@ import mongoDB from './utils/mongoDB'
 import passport from 'passport'
 import mainRoute from './routes/mainRoute'
 import authRoute from './routes/authRoute'
-import validateRoute from './routes/validateRoute'
 
 const app = express()
 const PORT = 3001
@@ -22,7 +21,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 app.use(authRoute)
-app.use(validateRoute)
 app.use(mainRoute)
 
 app.listen(PORT, () => {

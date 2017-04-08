@@ -6,9 +6,10 @@ export default mongoose.model('UserSchema', mongoose.Schema({
     required: true,
     unique: true
   },
-  accessToken: {
-    type: String,
-    required: true
+  level: {
+    type: Number,
+    required: true,
+    default: 0
   },
   date: {
     type: Date,
