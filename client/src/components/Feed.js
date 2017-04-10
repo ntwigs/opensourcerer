@@ -30,7 +30,7 @@ class User extends Component {
         })
 
         this.setState({
-          issues: [...this.state.issues, ...newEvents],
+          issues: [...newEvents, ...this.state.issues],
           etag: userEvents.headers.etag
         })
       }
@@ -38,20 +38,18 @@ class User extends Component {
       this.restart()
       
     } catch(e) {
-      console.log(e)
-      if (e.response.statusCode === 403 ) {
+      if (e.response.statusCode === 403) {
         return this.restart(this.timeLeft(e.response.headers['x-ratelimit-reset']))
-      }
+      } else if (e.response.statusCode === 304) {
+        return this.restart()
+      } 
 
       this.refreshEvents()
     }
   }
 
-  replaceEtag = etag => {
-    
-  }
-
   restart = (time = 60000) => {
+    console.log(time)
     setTimeout(() => {
       this.refreshEvents()
     }, time)
