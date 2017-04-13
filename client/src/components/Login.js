@@ -9,14 +9,14 @@ export default class extends Component {
     if (username) {
       localStorage.setItem('username', username)
       this.props.history.replace({
-        pathname: `/users/${ username }` 
+        pathname: `/users/${ username }`
       })
     }
   }
 
   render() {
     return (
-      <a href='http://localhost:3001/login'>Login</a>
+      <a href='http://localhost:3001/login'>Become a Sourcerer</a>
     )
   }
 }

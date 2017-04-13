@@ -1,21 +1,30 @@
 import React, { Component } from 'react'
 import rp from 'request-promise'
+import Presentation from './Presentation'
 import Feed from './Feed'
 
 export default class extends Component {
-  componentDidMount = async () => {
-    const { username } = this.props.match.params
-    const user = await rp(`http://localhost:3001/users/${ username }`, {
-      json: true
+  state = {
+    userExists: true
+  }
+
+  componentDidUpdate = () => {
+    this.setState({
+      userExists: true
+    })
+  }
+  
+  setUserDoesNotExists = () => {
+    this.setState({
+      userExists: false
     })
   }
 
   render() {
-
     return (
       <section>
-        <h1>{ this.props.match.params.username }</h1>
-        <Feed username={ this.props.match.params.username } />
+        <Presentation userExists={ this.state.userExists } username={ this.props.match.params.username } />
+        <Feed setUserDoesNotExists={ this.setUserDoesNotExists } username={ this.props.match.params.username } />
       </section>
     )
   }

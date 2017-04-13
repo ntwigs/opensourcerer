@@ -4,14 +4,17 @@ import Issue from './Issue'
 
 export default class extends Component {
   URL = `https://api.github.com/users/${ this.props.username }/events`
-  POLL_TIME = 60 // The allowed time to poll GitHub
+  POLL_TIME = 1000 // How often to poll GitHub
   state = {
     issues: [],
     etag: undefined
   }
 
+  componentDidMount = async () => {
+    this.refreshEvents()
+  }
+
   componentWillReceiveProps = async () => {
-    console.log('Entered')
     this.refreshEvents()
   }
 
@@ -32,7 +35,9 @@ export default class extends Component {
 
       this.restart()
     } catch(e) {
-      if (e.statusCode === 403) { 
+      if (e.statusCode === 404) {
+        return this.props.setUserDoesNotExists()
+      } else if (e.statusCode === 403) { 
         return this.restart(this.timeLeft(e.headers['x-ratelimit-reset']))
       } else if (e.statusCode === 304) {
         return this.restart()
@@ -48,6 +53,8 @@ export default class extends Component {
       json: true,
       resolveWithFullResponse: true
     })
+
+    console.log(newEvents)
 
     const obtainedNewEvent = newEvents.body.filter(issue => {
       if (!this.state.issues.includes(issue)) {
