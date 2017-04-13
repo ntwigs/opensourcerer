@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class Issue extends Component {
+export default class extends Component {
   render() {
     const { id, type, created_at } = this.props.issue
 
@@ -13,5 +13,3 @@ class Issue extends Component {
     )
   }
 }
-
-export default Issue

@@ -7,7 +7,7 @@ import { BrowserRouter as Router, Route, browserHistory } from 'react-router-dom
 ReactDOM.render(
   <Router histrory={ browserHistory }>
     <div className='body-wrapper'>
-      <Route path='/' component={ Login } />
+      <Route exact path='/' component={ Login } />
       <Route path='/users/:username' component={ User } />
     </div>
   </Router>,

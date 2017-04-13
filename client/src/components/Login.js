@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import queryString from 'query-string'
 
-class Login extends Component {
+export default class extends Component {
   componentDidMount = () => {
     const parsedUsername = queryString.parse(this.props.location.search).username
     const username = parsedUsername || localStorage.getItem('username')
@@ -20,5 +20,3 @@ class Login extends Component {
     )
   }
 }
-
-export default Login

@@ -2,13 +2,12 @@ import React, { Component } from 'react'
 import rp from 'request-promise'
 import Feed from './Feed'
 
-class User extends Component {
+export default class extends Component {
   componentDidMount = async () => {
     const { username } = this.props.match.params
     const user = await rp(`http://localhost:3001/users/${ username }`, {
       json: true
     })
-    console.log(user)
   }
 
   render() {
@@ -21,5 +20,3 @@ class User extends Component {
     )
   }
 }
-
-export default User

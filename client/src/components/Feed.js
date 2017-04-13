@@ -4,13 +4,14 @@ import Issue from './Issue'
 
 export default class extends Component {
   URL = `https://api.github.com/users/${ this.props.username }/events`
+  POLL_TIME = 60 // The allowed time to poll GitHub
   state = {
     issues: [],
-    etag: undefined,
-    pollTime: 60
+    etag: undefined
   }
 
   componentWillReceiveProps = async () => {
+    console.log('Entered')
     this.refreshEvents()
   }
 
@@ -31,7 +32,7 @@ export default class extends Component {
 
       this.restart()
     } catch(e) {
-      if (e.statusCode === 403) {
+      if (e.statusCode === 403) { 
         return this.restart(this.timeLeft(e.headers['x-ratelimit-reset']))
       } else if (e.statusCode === 304) {
         return this.restart()
@@ -62,14 +63,14 @@ export default class extends Component {
     })
   }
 
-  restart = (time = 60) => {
+  restart = () => {
     setTimeout(() => {
       this.refreshEvents()
-    }, time)
+    }, this.POLL_TIME)
   }
 
   timeLeft = (time) => {
-    const until = new Date(time * 1000).getTime()
+    const until = new Date(time * 1000).getTime() // To milliseconds
     const current = new Date().getTime()
     return until - current
   }
