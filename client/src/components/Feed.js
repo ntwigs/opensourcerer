@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import rp from 'request-promise'
 import { Link } from 'react-router-dom'
+import Issue from './Issue'
 
 class User extends Component {
   URL = `https://api.github.com/users/${ this.props.username }/events`
@@ -74,11 +75,7 @@ class User extends Component {
   displayIssues = () => {
     return this.state.issues.map(issue => {
       return (
-        <div key={ issue.id }>
-          <h4>{ issue.type }</h4>
-          <h5>{ issue.id }</h5>
-          <h6>{ issue.created_at }</h6>
-        </div>
+        <Issue issue={ issue }/>
       )
     })
   }
