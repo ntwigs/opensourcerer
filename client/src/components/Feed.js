@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import rp from 'request-promise'
-import { Link } from 'react-router-dom'
 import Issue from './Issue'
 
-class User extends Component {
+export default class extends Component {
   URL = `https://api.github.com/users/${ this.props.username }/events`
   state = {
     issues: [],
-    etag: undefined
+    etag: undefined,
+    pollTime: 60
   }
 
   componentWillReceiveProps = async () => {
@@ -35,7 +35,7 @@ class User extends Component {
         return this.restart(this.timeLeft(e.headers['x-ratelimit-reset']))
       } else if (e.statusCode === 304) {
         return this.restart()
-      } 
+      }
 
       this.refreshEvents()
     }
@@ -51,6 +51,8 @@ class User extends Component {
     const obtainedNewEvent = newEvents.body.filter(issue => {
       if (!this.state.issues.includes(issue)) {
         return issue
+      } else {
+        return undefined
       }
     })
 
@@ -75,7 +77,7 @@ class User extends Component {
   displayIssues = () => {
     return this.state.issues.map(issue => {
       return (
-        <Issue issue={ issue }/>
+        <Issue key={ issue.id } issue={ issue }/>
       )
     })
   }
@@ -88,5 +90,3 @@ class User extends Component {
     )
   }
 }
-
-export default User

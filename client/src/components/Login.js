@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
-import rp from 'request-promise'
 import queryString from 'query-string'
 
 class Login extends Component {

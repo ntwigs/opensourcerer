@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import rp from 'request-promise'
 import Feed from './Feed'
-import { Link } from 'react-router-dom'
 
 class User extends Component {
   componentDidMount = async () => {
