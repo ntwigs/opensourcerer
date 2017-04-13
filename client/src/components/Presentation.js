@@ -11,7 +11,7 @@ export default class extends Component {
       json: true
     })
 
-    if (this.props.exists) {
+    if (!this.props.userExists) {
       this.setState({ username: `The user ${ this.props.username } does not exist` })
     } else if (user) {
       this.setState({ username: user.username })

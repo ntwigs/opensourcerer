@@ -1,17 +1,10 @@
 import React, { Component } from 'react'
-import rp from 'request-promise'
 import Presentation from './Presentation'
 import Feed from './Feed'
 
 export default class extends Component {
   state = {
     userExists: true
-  }
-
-  componentDidUpdate = () => {
-    this.setState({
-      userExists: true
-    })
   }
   
   setUserDoesNotExists = () => {

@@ -38,7 +38,7 @@ export default class extends Component {
       if (e.statusCode === 404) {
         return this.props.setUserDoesNotExists()
       } else if (e.statusCode === 403) { 
-        return this.restart(this.timeLeft(e.headers['x-ratelimit-reset']))
+        return this.restart(e)
       } else if (e.statusCode === 304) {
         return this.restart()
       }
@@ -54,8 +54,6 @@ export default class extends Component {
       resolveWithFullResponse: true
     })
 
-    console.log(newEvents)
-
     const obtainedNewEvent = newEvents.body.filter(issue => {
       if (!this.state.issues.includes(issue)) {
         return issue
@@ -70,10 +68,14 @@ export default class extends Component {
     })
   }
 
-  restart = () => {
+  restart = error => {
+    const timeUntilPoll = error ?
+      error.response.headers['x-ratelimit-reset'] :
+      this.POLL_TIME 
+
     setTimeout(() => {
       this.refreshEvents()
-    }, this.POLL_TIME)
+    }, timeUntilPoll)
   }
 
   timeLeft = (time) => {
