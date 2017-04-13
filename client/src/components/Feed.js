@@ -3,6 +3,7 @@ import rp from 'request-promise'
 import { Link } from 'react-router-dom'
 
 class User extends Component {
+  URL = `https://api.github.com/users/${ this.props.username }/events`
   state = {
     issues: [],
     etag: undefined
@@ -14,7 +15,8 @@ class User extends Component {
 
   refreshEvents = async () => {
     try {
-      const userEvents = await rp(`https://api.github.com/users/${ this.props.username }/events`, {
+      const userEvents = await rp(this.URL, {
+        method: 'HEAD',
         headers: {
           'If-None-Match': this.state.etag
         },
@@ -23,24 +25,14 @@ class User extends Component {
       })
 
       if (userEvents.headers.etag !== this.state.etag) {
-        const newEvents = userEvents.body.filter(issue => {
-          if (!this.state.issues.includes(issue)) {
-            return issue
-          }
-        })
-
-        this.setState({
-          issues: [...newEvents, ...this.state.issues],
-          etag: userEvents.headers.etag
-        })
+        await this.fetchNewEvents(userEvents.headers.etag)
       }
 
       this.restart()
-      
     } catch(e) {
-      if (e.response.statusCode === 403) {
-        return this.restart(this.timeLeft(e.response.headers['x-ratelimit-reset']))
-      } else if (e.response.statusCode === 304) {
+      if (e.statusCode === 403) {
+        return this.restart(this.timeLeft(e.headers['x-ratelimit-reset']))
+      } else if (e.statusCode === 304) {
         return this.restart()
       } 
 
@@ -48,8 +40,26 @@ class User extends Component {
     }
   }
 
-  restart = (time = 60000) => {
-    console.log(time)
+  fetchNewEvents = async etag => {
+    const newEvents = await rp(this.URL, {
+      method: 'GET',
+      json: true,
+      resolveWithFullResponse: true
+    })
+
+    const obtainedNewEvent = newEvents.body.filter(issue => {
+      if (!this.state.issues.includes(issue)) {
+        return issue
+      }
+    })
+
+    this.setState({
+      issues: [...obtainedNewEvent, ...this.state.issues],
+      etag: newEvents.headers.etag
+    })
+  }
+
+  restart = (time = 60) => {
     setTimeout(() => {
       this.refreshEvents()
     }, time)
