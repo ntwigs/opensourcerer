@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import rp from 'request-promise'
 import Event from './Event'
+import { FOR_DEV } from '../../secret'
 
 export default class extends Component {
   POLL_TIME = 1000 // How often to poll GitHub
@@ -19,12 +20,11 @@ export default class extends Component {
         method: 'HEAD',
         headers: {
           'If-None-Match': this.state.etag,
+          Authorization: `Bearer ${ FOR_DEV }`
         },
         json: true,
         resolveWithFullResponse: true
       })
-
-
 
       if (this.state.etag === undefined) {
         this.fetchInitialEvents()
