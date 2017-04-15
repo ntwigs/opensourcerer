@@ -9,18 +9,7 @@ export default class extends Component {
     etag: undefined
   }
 
-  // For leveling up test
-  componentDidMount = async () => {
-    const newEvents = await rp(`http://localhost:3001/levelup`, {
-      method: 'POST',
-      json: true,
-      body: {
-        username: this.props.username
-      }
-    })
-  }
-
-  componentWillReceiveProps = async () => {
+  componentDidMount = () => {
     this.refreshEvents()
   }
 
@@ -29,15 +18,21 @@ export default class extends Component {
       const userEvents = await rp(`https://api.github.com/users/${ this.props.username }/events`, {
         method: 'HEAD',
         headers: {
-          'If-None-Match': this.state.etag
+          'If-None-Match': this.state.etag,
         },
         json: true,
         resolveWithFullResponse: true
       })
 
+
+
+      if (this.state.etag === undefined) {
+        this.fetchInitialEvents()
+      }
+
       if (userEvents.headers.etag !== this.state.etag) {
         await this.fetchNewEvents(userEvents.headers.etag)
-      }
+      } 
 
       this.restart()
     } catch(e) {
@@ -52,28 +47,34 @@ export default class extends Component {
     }
   }
 
-  fetchNewEvents = async etag => {
-    const newEvents = await rp(`http://localhost:3001/levelup`, {
-      method: 'POST',
-      body: {
-        username: this.props.username
-      },
-      json: true,
-      resolveWithFullResponse: true
+  fetchInitialEvents = async () => {
+    const events = await rp(`http://localhost:3001/events/${ this.props.username }`, {
+      method: 'GET',
+      json: true
     })
-    console.log(newEvents)
-    const obtainedNewEvent = newEvents.body.filter(event => {
-      if (!this.state.events.includes(event)) {
-        return event
-      } else {
-        return undefined
-      }
-    })
-
     this.setState({
-      issues: [...obtainedNewEvent, ...this.state.events],
-      etag
+      events: events.organizedEvents
     })
+  }
+
+  fetchNewEvents = async etag => {
+    try {
+      const newEvents = await rp(`http://localhost:3001/levelup`, {
+        method: 'POST',
+        body: {
+          username: this.props.username
+        },
+        json: true
+      })
+
+      this.setState({
+        events: [...newEvents.newEvents, ...this.state.events],
+        etag
+      })
+
+    } catch(error) {
+      console.log(error)
+    }
   }
 
   restart = error => {
@@ -95,7 +96,7 @@ export default class extends Component {
   displayEvents = () => {
     return this.state.events.map(event => {
       return (
-        <Event key={ event.id } issue={ event }/>
+        <Event key={ event.id } event={ event }/>
       )
     })
   }
