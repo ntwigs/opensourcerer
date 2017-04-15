@@ -49,8 +49,6 @@ router
         experience
       })
 
-      console.log(newEvents)
-
       res.json({
         events: newEvents,
         experience

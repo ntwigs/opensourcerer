@@ -1,2 +1,2 @@
 # OpenSourcerer
-An initiative to get more people involved in opensource.
+An initiative to get more people involved with opensource.
