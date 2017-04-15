@@ -20,11 +20,24 @@ router
       })
 
       const user = await UserSchema.findOne(
-        { username: { $regex: username, $options: 'i' } },
-        'username events experience'
+        { username: { $regex: username, $options: 'i' } }
       )
-      const newEvents = events.filter((event, index) => {
 
+      if (!user) {
+        const organizedEvents = events.map(event => {
+          return  {
+            id: event.id,
+            type: event.type,
+            repo: event.repo.name
+          }
+        })
+
+        return res.json({
+          events: [...organizedEvents]
+        })
+      }
+
+      const newEvents = events.filter((event, index) => {
         if (user.events[index].id !== event.id) {
           return  {
             id: event.id,
@@ -32,16 +45,19 @@ router
             repo: event.repo.name
           }
         }
-
         return undefined
       })
 
+      const experience = levelCalculator(user.experience, newEvents.length)
+
       const updatedUser = await UserSchema.findOneAndUpdate({ username }, {
-        events: [...newEvents, ...user.events]
+        events: [...newEvents, ...user.events],
+        experience
       })
 
       res.json({
-        newEvents
+        newEvents,
+        experience
       })
 
     } catch(error) {
