@@ -19,8 +19,10 @@ router
         json: true
       })
 
-      const user = await UserSchema.findOne({ username }, 'username events experience')
-
+      const user = await UserSchema.findOne(
+        { username: { $regex: username, $options: 'i' } },
+        'username events experience'
+      )
       const newEvents = events.filter((event, index) => {
 
         if (user.events[index].id !== event.id) {
