@@ -4,7 +4,7 @@ import rp from 'request-promise'
 export default class extends Component {
   state = {
     username: '',
-    level: undefined
+    experience: this.props.experience
   }
 
   componentDidMount = async () => {
@@ -17,9 +17,9 @@ export default class extends Component {
         username: `The user ${ this.props.username } does not exist`
       })
     } else if (user) {
-      this.setState({ 
-        username: user.username, 
-        level: user.experience
+      this.setState({
+        username: user.username,
+        experience: user.experience
       })
     } else {
       this.setState({
@@ -32,7 +32,7 @@ export default class extends Component {
     return (
       <section>
         <h1>{ this.state.username }</h1>
-        <h3>Level: { this.state.level }</h3>
+        <h3>Experience: { this.state.experience }</h3>
       </section>
     )
   }

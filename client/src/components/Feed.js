@@ -26,24 +26,29 @@ export default class extends Component {
         resolveWithFullResponse: true
       })
 
+      console.log(userEvents)
+
+
       if (this.state.etag === undefined) {
-        this.fetchInitialEvents(userEvents.headers.etag)
+        await this.fetchInitialEvents(userEvents.headers.etag)
       }
+      console.log('2')
 
       if (userEvents.headers.etag !== this.state.etag) {
         await this.fetchNewEvents(userEvents.headers.etag)
-      } 
+      }
+      console.log('3')
 
       this.restart()
     } catch(e) {
       if (e.statusCode === 404) {
         return this.props.setUserDoesNotExists()
-      } else if (e.statusCode === 403) { 
+      } else if (e.statusCode === 403) {
         return this.restart(e)
       } else if (e.statusCode === 304) {
         return this.restart()
       }
-      this.refreshEvents()
+      this.restart()
     }
   }
 
@@ -53,10 +58,12 @@ export default class extends Component {
         method: 'GET',
         json: true
       })
+
       this.setState({
         events: events.organizedEvents,
         etag
       })
+
     } catch(error) {
       console.log(error)
     }
@@ -73,10 +80,11 @@ export default class extends Component {
       })
 
       this.setState({
-        events: [...newEvents.newEvents, ...this.state.events],
+        events: [...newEvents.events, ...this.state.events],
         etag
       })
 
+      this.props.experienceGain()
     } catch(error) {
       console.log(error)
     }
