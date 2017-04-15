@@ -1,17 +1,23 @@
 import React, { Component } from 'react'
 import rp from 'request-promise'
-import Issue from './Issue'
+import Event from './Event'
 
 export default class extends Component {
-  URL = `https://api.github.com/users/${ this.props.username }/events`
   POLL_TIME = 1000 // How often to poll GitHub
   state = {
-    issues: [],
+    events: [],
     etag: undefined
   }
 
+  // For leveling up test
   componentDidMount = async () => {
-    this.refreshEvents()
+    const newEvents = await rp(`http://localhost:3001/levelup`, {
+      method: 'POST',
+      json: true,
+      body: {
+        username: this.props.username
+      }
+    })
   }
 
   componentWillReceiveProps = async () => {
@@ -20,7 +26,7 @@ export default class extends Component {
 
   refreshEvents = async () => {
     try {
-      const userEvents = await rp(this.URL, {
+      const userEvents = await rp(`https://api.github.com/users/${ this.props.username }/events`, {
         method: 'HEAD',
         headers: {
           'If-None-Match': this.state.etag
@@ -35,7 +41,6 @@ export default class extends Component {
 
       this.restart()
     } catch(e) {
-      console.log(e)
       if (e.statusCode === 404) {
         return this.props.setUserDoesNotExists()
       } else if (e.statusCode === 403) { 
@@ -48,23 +53,26 @@ export default class extends Component {
   }
 
   fetchNewEvents = async etag => {
-    const newEvents = await rp(this.URL, {
-      method: 'GET',
+    const newEvents = await rp(`http://localhost:3001/levelup`, {
+      method: 'POST',
+      body: {
+        username: this.props.username
+      },
       json: true,
       resolveWithFullResponse: true
     })
-
-    const obtainedNewEvent = newEvents.body.filter(issue => {
-      if (!this.state.issues.includes(issue)) {
-        return issue
+    console.log(newEvents)
+    const obtainedNewEvent = newEvents.body.filter(event => {
+      if (!this.state.events.includes(event)) {
+        return event
       } else {
         return undefined
       }
     })
 
     this.setState({
-      issues: [...obtainedNewEvent, ...this.state.issues],
-      etag: newEvents.headers.etag
+      issues: [...obtainedNewEvent, ...this.state.events],
+      etag
     })
   }
 
@@ -84,10 +92,10 @@ export default class extends Component {
     return until - current
   }
 
-  displayIssues = () => {
-    return this.state.issues.map(issue => {
+  displayEvents = () => {
+    return this.state.events.map(event => {
       return (
-        <Issue key={ issue.id } issue={ issue }/>
+        <Event key={ event.id } issue={ event }/>
       )
     })
   }
@@ -95,7 +103,7 @@ export default class extends Component {
   render() {
     return (
       <div>
-        { this.displayIssues() }
+        { this.displayEvents() }
       </div>
     )
   }

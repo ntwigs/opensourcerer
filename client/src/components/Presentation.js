@@ -19,7 +19,7 @@ export default class extends Component {
     } else if (user) {
       this.setState({ 
         username: user.username, 
-        level: user.level  
+        level: user.experience
       })
     } else {
       this.setState({
