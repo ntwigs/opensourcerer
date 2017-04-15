@@ -2,6 +2,7 @@ import { Strategy as GitHubStrategy } from 'passport-github'
 import rp from 'request-promise'
 import UserSchema from '../schemas/UserSchema'
 import passport from 'passport'
+import levelCalculator from './levelCalculator'
 
 passport.serializeUser((user, done) => {
   done(null, user)
@@ -21,38 +22,36 @@ passport.use(new GitHubStrategy({
 
     const { username } = profile
 
-    const events = await rp(`https://api.github.com/users/${ username }/events`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${ process.env.GITHUB_ACCESS_TOKEN }`,
-        'User-Agent': 'NorthernTwig'
-      },
-      json: true
-    })
+    const user = await UserSchema.findOne({ username })
+    if (!user) {
+      const events = await rp(`https://api.github.com/users/${ username }/events`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${ process.env.GITHUB_ACCESS_TOKEN }`,
+          'User-Agent': 'NorthernTwig'
+        },
+        json: true
+      })
 
-    const eventArray = events.map(event => {
-      const { id, type, repo } = event
-      
-      return {
-        id,
-        type,
-        repo: repo.name
+      const eventArray = events.map(event => {
+        const { id, type, repo } = event
+        
+        return {
+          id,
+          type,
+          repo: repo.name
+        }
+      })
+
+      const experience = eventArray.reduce((exp, _) => exp += 500, 0)
+      const userObject = {
+        username,
+        events: eventArray,
+        experience
       }
-    })
-    
-    const userObject = {
-      username,
-      events: eventArray
+
+      await new UserSchema(userObject).save()
     }
-
-    const existingUser = await UserSchema.findOneAndUpdate(
-      { username },
-      userObject,
-      {
-        upsert: true,
-        new: true
-      }
-    )
 
     done(null, profile)
 

@@ -2,7 +2,7 @@ import express from 'express'
 import passport from 'passport'
 import rp from 'request-promise'
 import UserSchema from '../schemas/UserSchema'
-import levelCalculator from './lib/levelCalculator'
+import levelCalculator from '../utils/levelCalculator'
 const router = express.Router()
 
 router
