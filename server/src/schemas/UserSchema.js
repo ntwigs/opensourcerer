@@ -11,6 +11,11 @@ export default mongoose.model('UserSchema', mongoose.Schema({
     required: true,
     default: 0
   },
+  events: {
+    type: Array,
+    required: true,
+    default: []  
+  },
   date: {
     type: Date,
     default: Date.now,

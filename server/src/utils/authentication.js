@@ -1,4 +1,5 @@
 import { Strategy as GitHubStrategy } from 'passport-github'
+import rp from 'request-promise'
 import UserSchema from '../schemas/UserSchema'
 import passport from 'passport'
 
@@ -16,14 +17,32 @@ passport.use(new GitHubStrategy({
   callbackURL: 'http://localhost:3001/login/callback'
 }, async (accessToken, refreshToken, profile, done) => {
   try {
-
     if (!profile) throw new Error('No profile!')
 
     const { username } = profile
 
+    const events = await rp(`https://api.github.com/users/${ username }/events`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${ process.env.GITHUB_ACCESS_TOKEN }`,
+        'User-Agent': 'NorthernTwig'
+      },
+      json: true
+    })
+
+    const eventArray = events.map(event => {
+      const { id, type, repo } = event
+      
+      return {
+        id,
+        type,
+        repo: repo.name
+      }
+    })
+    
     const userObject = {
       username,
-      accessToken
+      events: eventArray
     }
 
     const existingUser = await UserSchema.findOneAndUpdate(
