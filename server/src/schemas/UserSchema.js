@@ -6,7 +6,7 @@ export default mongoose.model('UserSchema', mongoose.Schema({
     required: true,
     unique: true
   },
-  level: {
+  experience: {
     type: Number,
     required: true,
     default: 0
