@@ -8,29 +8,24 @@ router
     .get('/login', passport.authenticate('github', {
       scope: ['user', 'events']
     }))
-    .get('/login/success', async (req, res) => {
-      try {
-        const { user } = req
-
-        if (!user) await res.redirect('http://localhost:3000/')
-
-        const existingUser = await UserSchema.findOne(
-          { username: user.username }
-        )
-
-        if (!existingUser) await res.redirect('http://localhost:3000/')
-
-        await res.redirect(`http://localhost:3000/?username=${ existingUser.username }`)
-
-      } catch(error) {
-        console.log(error)
-      }
-
-    })
     .get('/login/callback',
-      passport.authenticate('github', {
-        successRedirect: '/login/success',
-        failureRedirect: '/'
-      }))
+      passport.authenticate('github', { failureRedirect: '/' }), async (req, res) => {
+        try {
+          const { user } = req
+
+          if (!user) await res.redirect('http://localhost:3000/')
+
+          const existingUser = await UserSchema.findOne(
+            { username: user.username }
+          )
+
+          if (!existingUser) await res.redirect('http://localhost:3000/')
+
+          await res.redirect(`http://localhost:3000/?username=${ existingUser.username }`)
+
+        } catch(error) {
+          console.log(error)
+        }
+      })
 
 export default router
