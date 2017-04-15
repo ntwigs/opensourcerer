@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import rp from 'request-promise'
 import Event from './Event'
-import { FOR_DEV } from '../../secret'
+import { FOR_DEV } from '../secret'
 
 export default class extends Component {
   POLL_TIME = 1000 // How often to poll GitHub
@@ -27,7 +27,7 @@ export default class extends Component {
       })
 
       if (this.state.etag === undefined) {
-        this.fetchInitialEvents()
+        this.fetchInitialEvents(userEvents.headers.etag)
       }
 
       if (userEvents.headers.etag !== this.state.etag) {
@@ -47,14 +47,19 @@ export default class extends Component {
     }
   }
 
-  fetchInitialEvents = async () => {
-    const events = await rp(`http://localhost:3001/events/${ this.props.username }`, {
-      method: 'GET',
-      json: true
-    })
-    this.setState({
-      events: events.organizedEvents
-    })
+  fetchInitialEvents = async etag => {
+    try {
+      const events = await rp(`http://localhost:3001/events/${ this.props.username }`, {
+        method: 'GET',
+        json: true
+      })
+      this.setState({
+        events: events.organizedEvents,
+        etag
+      })
+    } catch(error) {
+      console.log(error)
+    }
   }
 
   fetchNewEvents = async etag => {
@@ -87,7 +92,7 @@ export default class extends Component {
     }, timeUntilRequest)
   }
 
-  timeLeft = (time) => {
+  timeLeft = time => {
     const until = new Date(time * 1000).getTime() // To milliseconds
     const current = new Date().getTime()
     return until - current
