@@ -43,7 +43,7 @@ passport.use(new GitHubStrategy({
         }
       })
 
-      const experience = eventArray.reduce((exp, _) => exp += 500, 0)
+      const experience = eventArray.reduce((exp, _) => levelCalculator(exp), 0)
       const userObject = {
         username,
         events: eventArray,
