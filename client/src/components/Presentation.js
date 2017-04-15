@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import rp from 'request-promise'
+import Logout from './Logout'
 
 export default class extends Component {
   state = {
@@ -32,6 +33,7 @@ export default class extends Component {
     return (
       <section>
         <h1>{ this.state.username }</h1>
+        { localStorage.getItem('username') && <Logout history={ this.props.history } /> }
         <h3>Experience: { this.state.experience }</h3>
       </section>
     )

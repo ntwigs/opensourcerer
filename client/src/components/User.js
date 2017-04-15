@@ -26,6 +26,7 @@ export default class extends Component {
         userExists={ this.state.userExists }
         username={ this.props.match.params.username }
         experience={ this.state.experience }
+        history={ this.props.history }
       />
     }
     return (<h1>Hey, that name is available for usage!</h1>)
