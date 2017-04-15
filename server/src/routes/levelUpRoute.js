@@ -19,16 +19,31 @@ router
         json: true
       })
 
-      const user = UserSchema.findOne({ username })
+      const user = await UserSchema.findOne({ username }, 'username events experience')
 
-      const newEvents = user.events.filter(() => {
+      const newEvents = events.filter((event, index) => {
 
+        if (user.events[index].id !== event.id) {
+          return  {
+            id: event.id,
+            type: event.type,
+            repo: event.repo.name
+          }
+        }
+
+        return undefined
       })
 
-      
-      res.sendStatus(200)   
+      const updatedUser = await UserSchema.findOneAndUpdate({ username }, {
+        events: [...newEvents, ...user.events]
+      })
+
+      res.json({
+        newEvents
+      })
+
     } catch(error) {
-      res.send(error)
+      console.log(error)
     }
   })
 
