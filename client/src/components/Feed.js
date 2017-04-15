@@ -35,6 +35,7 @@ export default class extends Component {
 
       this.restart()
     } catch(e) {
+      console.log(e)
       if (e.statusCode === 404) {
         return this.props.setUserDoesNotExists()
       } else if (e.statusCode === 403) { 
@@ -42,7 +43,6 @@ export default class extends Component {
       } else if (e.statusCode === 304) {
         return this.restart()
       }
-
       this.refreshEvents()
     }
   }
@@ -69,13 +69,13 @@ export default class extends Component {
   }
 
   restart = error => {
-    const timeUntilPoll = error ?
+    const timeUntilRequest = error ?
       error.response.headers['x-ratelimit-reset'] :
       this.POLL_TIME 
 
     setTimeout(() => {
       this.refreshEvents()
-    }, timeUntilPoll)
+    }, timeUntilRequest)
   }
 
   timeLeft = (time) => {

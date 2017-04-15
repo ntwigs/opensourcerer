@@ -3,7 +3,8 @@ import rp from 'request-promise'
 
 export default class extends Component {
   state = {
-    username: ''
+    username: '',
+    level: undefined
   }
 
   componentDidMount = async () => {
@@ -12,11 +13,18 @@ export default class extends Component {
     })
 
     if (!this.props.userExists) {
-      this.setState({ username: `The user ${ this.props.username } does not exist` })
+      this.setState({
+        username: `The user ${ this.props.username } does not exist`
+      })
     } else if (user) {
-      this.setState({ username: user.username })
+      this.setState({ 
+        username: user.username, 
+        level: user.level  
+      })
     } else {
-      this.setState({ username: `The user ${ this.props.username } is not a Sourcerer` })
+      this.setState({
+        username: `The user ${ this.props.username } is not a Sourcerer`,
+      })
     }
   }
 
@@ -24,6 +32,7 @@ export default class extends Component {
     return (
       <section>
         <h1>{ this.state.username }</h1>
+        <h3>Level: { this.state.level }</h3>
       </section>
     )
   }
