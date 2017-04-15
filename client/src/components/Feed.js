@@ -26,18 +26,16 @@ export default class extends Component {
         resolveWithFullResponse: true
       })
 
-      console.log(userEvents)
-
 
       if (this.state.etag === undefined) {
         await this.fetchInitialEvents(userEvents.headers.etag)
       }
-      console.log('2')
+
+      console.log(this.state.etag)
 
       if (userEvents.headers.etag !== this.state.etag) {
         await this.fetchNewEvents(userEvents.headers.etag)
       }
-      console.log('3')
 
       this.restart()
     } catch(e) {
