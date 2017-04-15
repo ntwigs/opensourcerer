@@ -24,28 +24,22 @@ router
       )
 
       if (!user) {
-        const organizedEvents = events.map(event => {
-          return  {
-            id: event.id,
-            type: event.type,
-            repo: event.repo.name
-          }
-        })
-
         return res.json({
-          events: [...organizedEvents]
+          events: []
         })
       }
 
-      const newEvents = events.filter((event, index) => {
-        if (user.events[index].id !== event.id) {
-          return  {
-            id: event.id,
-            type: event.type,
-            repo: event.repo.name
-          }
+      const newEvents = events.filter(event => {
+        if (!user.events.find(oldEvent =>  oldEvent.id === event.id)) {
+          return true
         }
-        return undefined
+        return false
+      }).map(event => {
+        return {
+          id: event.id,
+          type: event.type,
+          repo: event.repo.name
+        }
       })
 
       const experience = levelCalculator(user.experience, newEvents.length)
@@ -55,8 +49,10 @@ router
         experience
       })
 
+      console.log(newEvents)
+
       res.json({
-        newEvents,
+        events: newEvents,
         experience
       })
 
