@@ -57,14 +57,13 @@ class Feed extends Component {
         json: true
       })
 
-      console.log(events)
-
       this.setState({
         events: events.organizedEvents,
         etag
       })
 
       this.props.experienceUpdate(events.experience)
+      this.props.avatarUpdate(events.avatarUrl)
     } catch(error) {
       console.log(error)
     }

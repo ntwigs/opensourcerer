@@ -34,7 +34,7 @@ class Presentation extends Component {
   render() {
     return (
       <Header>
-        <Avatar src='https://avatars2.githubusercontent.com/u/14088342?v=3&u=ea614e5e818df01226059095a1708b57c387284b&s=400'></Avatar>
+        <Avatar src={ this.props.state.user.avatarUrl }></Avatar>
         <h1>{ this.state.username }</h1>
         <h5>Sourcerer</h5>
         { localStorage.getItem('username') && <Logout history={ this.props.history } /> }
