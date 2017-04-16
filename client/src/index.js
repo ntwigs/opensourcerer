@@ -3,7 +3,9 @@ import ReactDOM from 'react-dom'
 import Login from './components/Login'
 import styled, { injectGlobal } from 'styled-components'
 import User from './components/User'
+import store from './redux/store'
 import { BrowserRouter as Router, Route, browserHistory } from 'react-router-dom'
+import { Provider } from 'react-redux'
 
 const BodyWrapper = styled.div`
   width: 100wv;
@@ -15,12 +17,14 @@ const BodyWrapper = styled.div`
 `
 
 ReactDOM.render(
-  <Router histrory={ browserHistory }>
-    <BodyWrapper>
-      <Route exact path='/' component={ Login } />
-      <Route path='/users/:username' component={ User } />
-    </BodyWrapper>
-  </Router>,
+  <Provider store={ store }>
+    <Router histrory={ browserHistory }>
+      <BodyWrapper>
+        <Route exact path='/' component={ Login } />
+        <Route path='/users/:username' component={ User } />
+      </BodyWrapper>
+    </Router>
+  </Provider>,
   document.getElementById('root')
 )
 

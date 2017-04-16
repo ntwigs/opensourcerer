@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
 import rp from 'request-promise'
 import styled from 'styled-components'
 import Logout from './Logout'
 
-export default class extends Component {
+class Presentation extends Component {
   state = {
-    username: '',
-    experience: this.props.experience
+    username: ''
   }
 
   componentDidMount = async () => {
@@ -42,11 +43,13 @@ export default class extends Component {
             <ExperiencePercentage></ExperiencePercentage>
           </ExperienceBar>
         </ExperienceBarContainer>
-        <h3>Experience: { this.state.experience }</h3>
+        <h3>Experience: { this.props.state.user.experience }</h3>
       </Header>
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Presentation)
 
 const Header = styled.header`
   height: 40%;

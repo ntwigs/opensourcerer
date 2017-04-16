@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
 import rp from 'request-promise'
 import styled from 'styled-components'
 import Event from './Event'
 import { FOR_DEV } from '../secret'
 
-export default class extends Component {
+class Feed extends Component {
   POLL_TIME = 1000 // How often to poll GitHub
   state = {
     events: [],
@@ -80,7 +82,7 @@ export default class extends Component {
         etag
       })
 
-      this.props.experienceGain(newEvents.experience)
+      this.props.experienceUpdate(newEvents.experience)
     } catch(error) {
       console.log(error)
     }
@@ -118,6 +120,8 @@ export default class extends Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Feed)
 
 const EventsWrapper = styled.div`
   column-count: 4;
