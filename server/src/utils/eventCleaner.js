@@ -4,13 +4,13 @@ export default event => {
       return {
         name: 'Issue',
         action: event.payload.action,
-        experience: 175 
+        experience: 125 
       }
     case 'IssueCommentEvent':
       return {
         name: 'Issue Comment',
         action: event.payload.action,
-        experience: 175 
+        experience: 75 
       }
     case 'PushEvent':
       return {
@@ -40,7 +40,19 @@ export default event => {
       return {
         name: 'Review Comment',
         action: event.payload.action,
-        experience: 125
+        experience: 75
+      }
+    case 'CreateEvent':
+      return {
+        name: 'Created',
+        action: 'Repo',
+        experience: 175
+      }
+    case 'WatchEvent':
+      return {
+        name: 'Watching',
+        action: 'Repo',
+        experience: 10
       }
   }
 }

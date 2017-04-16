@@ -1,6 +1,7 @@
 import express from 'express'
 import passport from 'passport'
 import rp from 'request-promise'
+import eventCleaner from '../utils/eventCleaner'
 import UserSchema from '../schemas/UserSchema'
 const router = express.Router()
 
@@ -23,23 +24,28 @@ router
         })
 
         const organizedEvents = events.map(event => {
+          const eventObject = eventCleaner(event)
+
           return  {
             id: event.id,
             type: event.type,
-            repo: event.repo.name
+            repo: event.repo.name,
+            events: eventObject
           }
         })
 
+        const experience = organizedEvents.reduce((exp, event) => exp += event.events.experience, 0)
+
         return res.json({
-          organizedEvents
+          organizedEvents,
+          experience
         })
       }
 
       const organizedEvents = user.events.map(event => {
         return  {
           id: event.id,
-          type: event.type,
-          repo: event.repo
+          events: event.event
         }
       })
 
