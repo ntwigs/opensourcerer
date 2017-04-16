@@ -19,7 +19,6 @@ passport.use(new GitHubStrategy({
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     if (!profile) throw new Error('No profile!')
-
     const { username } = profile
 
     const user = await UserSchema.findOne({ username })
@@ -44,10 +43,12 @@ passport.use(new GitHubStrategy({
       })
 
       const experience = eventArray.reduce((exp, _) => levelCalculator(exp), 0)
+
       const userObject = {
         username,
         events: eventArray,
-        experience
+        experience,
+        avatar: profile._json.avatar_url
       }
 
       await new UserSchema(userObject).save()

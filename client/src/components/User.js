@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Presentation from './Presentation'
+import styled from 'styled-components'
 import Feed from './Feed'
 
 export default class extends Component {
@@ -34,14 +35,23 @@ export default class extends Component {
 
   render() {
     return (
-      <section>
+      <MainContainer>
         { this.setText() }
         <Feed 
           setUserDoesNotExists={ this.setUserDoesNotExists }
           username={ this.props.match.params.username }
           experienceGain={ this.setExperience }
         />
-      </section>
+      </MainContainer>
     )
   }
 }
+
+const MainContainer = styled.div`
+  width: 100wv;
+  height: 100vh;
+  background-color: #dedded;
+  display: flex;
+  flex-direction: column;
+  background-color: #1e202f;
+`

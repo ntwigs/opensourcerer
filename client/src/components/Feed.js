@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import rp from 'request-promise'
+import styled from 'styled-components'
 import Event from './Event'
 import { FOR_DEV } from '../secret'
 
@@ -26,12 +27,9 @@ export default class extends Component {
         resolveWithFullResponse: true
       })
 
-
       if (this.state.etag === undefined) {
         await this.fetchInitialEvents(userEvents.headers.etag)
       }
-
-      console.log(this.state.etag)
 
       if (userEvents.headers.etag !== this.state.etag) {
         await this.fetchNewEvents(userEvents.headers.etag)
@@ -114,9 +112,23 @@ export default class extends Component {
 
   render() {
     return (
-      <div>
+      <EventsWrapper>
         { this.displayEvents() }
-      </div>
+      </EventsWrapper>
     )
   }
 }
+
+
+
+// const EventsWrapper = styled.div`
+//   width: 35%;
+//   display: inline-block;
+//   align-self: center;
+// `
+
+const EventsWrapper = styled.div`
+  column-count: 4;
+  column-gap: 0;
+  counter-reset: item-counter;
+`

@@ -6,6 +6,10 @@ export default mongoose.model('UserSchema', mongoose.Schema({
     required: true,
     unique: true
   },
+  avatar: {
+    type: String,
+    required: true
+  },
   experience: {
     type: Number,
     required: true,
