@@ -30,33 +30,32 @@ router
       }
 
       const newEvents = events.filter(event => {
-        if (!user.events.find(oldEvent =>  oldEvent.id === event.id)) {
+        if (!user.events.find(oldEvent => oldEvent.id === event.id)) {
           return true
         }
         return false
-      }).map(event => {
-         const organizedEvents = events.map(event => {
+      })
+      
+      const mappedNewEvents = newEvents.map(event => {
           const eventObject = eventCleaner(event)
-
+          
           return  {
             id: event.id,
             type: event.type,
             repo: event.repo.name,
             events: eventObject
           }
-        })
       })
 
-
-      const experience = newEvents.reduce((exp, event) => exp += event.events.experience, user.experience) 
+      const experience = mappedNewEvents.reduce((exp, event) => exp += event.events.experience, user.experience) 
 
       const updatedUser = await UserSchema.findOneAndUpdate({ username }, {
-        events: [...newEvents, ...user.events],
+        events: [...mappedNewEvents, ...user.events],
         experience
       })
 
       res.json({
-        events: newEvents,
+        events: mappedNewEvents,
         experience
       })
 
