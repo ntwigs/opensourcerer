@@ -35,7 +35,7 @@ router
         })
 
         const experience = organizedEvents.reduce((exp, event) => exp += event.events.experience, 0)
-
+        
         return res.json({
           organizedEvents,
           experience
@@ -48,6 +48,8 @@ router
           events: event.event
         }
       })
+
+      console.log(organizedEvents)
 
       res.json({
         organizedEvents
