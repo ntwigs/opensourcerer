@@ -2,6 +2,7 @@ import { Strategy as GitHubStrategy } from 'passport-github'
 import rp from 'request-promise'
 import UserSchema from '../schemas/UserSchema'
 import passport from 'passport'
+import eventCleaner from './eventCleaner'
 import levelCalculator from './levelCalculator'
 
 passport.serializeUser((user, done) => {
@@ -33,17 +34,18 @@ passport.use(new GitHubStrategy({
       })
 
       const eventArray = events.map(event => {
-        const { id, type, repo } = event
-        
+        const { id, type, repo, created_at } = event
+        const eventObject = eventCleaner(event)
         return {
           id,
           type,
-          repo: repo.name
+          event: eventObject,
+          repo: repo.name,
+          date: created_at
         }
       })
 
-      const experience = eventArray.reduce((exp, _) => levelCalculator(exp), 0)
-
+      const experience = eventArray.reduce((exp, event) => exp += event.event.experience, 0)
       const userObject = {
         username,
         events: eventArray,

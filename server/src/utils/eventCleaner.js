@@ -1,6 +1,6 @@
 export default event => {
   switch(event.type) {
-    case 'IssueEvent':
+    case 'IssuesEvent':
       return {
         name: 'Issue',
         action: event.payload.action,
