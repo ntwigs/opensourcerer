@@ -33,7 +33,11 @@ router
         if (event.repo === undefined)
           return false
 
-        return !user.events.find(oldEvent => oldEvent.id === event.id)
+        if (!user.events.find(oldEvent => oldEvent.id === event.id)) {
+          return true
+        } else {
+          return false
+        }
       })
       
       const mappedNewEvents = newEvents.map(event => {
