@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import Presentation from './Presentation'
+import { connect } from 'react-redux'
+import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
 import styled from 'styled-components'
 import Feed from './Feed'
 
-export default class extends Component {
+class User extends Component {
   state = {
     userExists: true,
     experience: 0,
@@ -54,6 +56,8 @@ export default class extends Component {
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(User)
 
 const MainContainer = styled.div`
   width: 100wv;
