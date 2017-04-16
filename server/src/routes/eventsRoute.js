@@ -45,11 +45,9 @@ router
       const organizedEvents = user.events.map(event => {
         return  {
           id: event.id,
-          events: event.event
+          events: event.events
         }
       })
-
-      console.log(organizedEvents)
 
       res.json({
         organizedEvents

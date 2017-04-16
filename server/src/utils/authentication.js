@@ -39,13 +39,13 @@ passport.use(new GitHubStrategy({
         return {
           id,
           type,
-          event: eventObject,
+          events: eventObject,
           repo: repo.name,
           date: created_at
         }
       })
 
-      const experience = eventArray.reduce((exp, event) => exp += event.event.experience, 0)
+      const experience = eventArray.reduce((exp, event) => exp += event.events.experience, 0)
       const userObject = {
         username,
         events: eventArray,
