@@ -119,14 +119,6 @@ export default class extends Component {
   }
 }
 
-
-
-// const EventsWrapper = styled.div`
-//   width: 35%;
-//   display: inline-block;
-//   align-self: center;
-// `
-
 const EventsWrapper = styled.div`
   column-count: 4;
   column-gap: 0;
