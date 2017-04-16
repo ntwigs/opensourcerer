@@ -3,16 +3,16 @@ import styled from 'styled-components'
 
 export default class extends Component {
   render() {
-    const { id, repo, type, created_at } = this.props.event
+    const { name, action, experience } = this.props.event.events
 
     return (
       <Item>
-        <EventContainer className='large'>
+        <EventContainer className={ experience >= 150 ? 'large' : 'small' }>
           <RepoImage src='https://github.com/identicons/osc.png'></RepoImage>
           <TextContainer className='text-container'>
-            <h3>{ type }</h3>
-            <h2>MERGED</h2>
-            <h1>+{ Math.ceil(id/100000000) }</h1>
+            <h3>{ name }</h3>
+            <h2>{ action }</h2>
+            <h1>+{ experience }</h1>
           </TextContainer>
         </EventContainer>
       </Item>
@@ -56,7 +56,6 @@ const Item = styled.div`
       margin-top: 20px;
       align-items: center;
     }
-    
   }
   
   .small {
