@@ -2,7 +2,7 @@ import express from 'express'
 import passport from 'passport'
 import rp from 'request-promise'
 import UserSchema from '../schemas/UserSchema'
-import levelCalculator from '../utils/levelCalculator'
+import eventCleaner from '../utils/eventCleaner'
 const router = express.Router()
 
 router
@@ -35,14 +35,20 @@ router
         }
         return false
       }).map(event => {
-        return {
-          id: event.id,
-          type: event.type,
-          repo: event.repo.name
-        }
+         const organizedEvents = events.map(event => {
+          const eventObject = eventCleaner(event)
+
+          return  {
+            id: event.id,
+            type: event.type,
+            repo: event.repo.name,
+            events: eventObject
+          }
+        })
       })
 
-      const experience = levelCalculator(user.experience, newEvents.length)
+
+      const experience = newEvents.reduce((exp, event) => exp += event.events.experience, user.experience) 
 
       const updatedUser = await UserSchema.findOneAndUpdate({ username }, {
         events: [...newEvents, ...user.events],
