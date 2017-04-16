@@ -35,22 +35,28 @@ router
         })
 
         const experience = organizedEvents.reduce((exp, event) => exp += event.events.experience, 0)
-        
+        const avatarUrl = events[0].actor.avatar_url
+
         return res.json({
           organizedEvents,
-          experience
+          experience,
+          avatarUrl
         })
       }
 
       const organizedEvents = user.events.map(event => {
         return  {
           id: event.id,
-          events: event.events
+          events: event.events,
         }
       })
 
+      const avatarUrl = user.avatar
+
       res.json({
-        organizedEvents
+        organizedEvents,
+        experience: user.experience,
+        avatarUrl
       })
 
     } catch(error) {
