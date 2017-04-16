@@ -3,7 +3,6 @@ import rp from 'request-promise'
 import UserSchema from '../schemas/UserSchema'
 import passport from 'passport'
 import eventCleaner from './eventCleaner'
-import levelCalculator from './levelCalculator'
 
 passport.serializeUser((user, done) => {
   done(null, user)

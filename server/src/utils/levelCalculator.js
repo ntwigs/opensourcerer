@@ -1,1 +1,0 @@
-export default (experience, amount = 1) => experience + 500 * amount

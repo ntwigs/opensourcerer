@@ -30,15 +30,14 @@ router
       }
 
       const newEvents = events.filter(event => {
-        if (!user.events.find(oldEvent => oldEvent.id === event.id)) {
-          return true
-        }
-        return false
+        if (event.repo === undefined)
+          return false
+
+        return !user.events.find(oldEvent => oldEvent.id === event.id)
       })
       
       const mappedNewEvents = newEvents.map(event => {
           const eventObject = eventCleaner(event)
-          
           return  {
             id: event.id,
             type: event.type,
