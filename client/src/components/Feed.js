@@ -80,7 +80,7 @@ export default class extends Component {
         etag
       })
 
-      this.props.experienceGain()
+      this.props.experienceGain(newEvents.experience)
     } catch(error) {
       console.log(error)
     }

@@ -6,7 +6,8 @@ import Feed from './Feed'
 export default class extends Component {
   state = {
     userExists: true,
-    experience: 0
+    experience: 0,
+    avatarUrl: ''
   }
   
   setUserDoesNotExists = () => {
@@ -21,6 +22,12 @@ export default class extends Component {
     })
   }
 
+  setAvatar = url => {
+    this.setState({
+      avatarUrl: url
+    })
+  }
+
   setText = () => {
     if (this.state.userExists) {
       return <Presentation 
@@ -28,6 +35,7 @@ export default class extends Component {
         username={ this.props.match.params.username }
         experience={ this.state.experience }
         history={ this.props.history }
+        avatarUrl={ this.state.avatarUrl }
       />
     }
     return (<h1>Hey, that name is available for usage!</h1>)
