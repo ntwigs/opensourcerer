@@ -26,6 +26,8 @@ router
         const organizedEvents = events.map(event => {
           const eventObject = eventCleaner(event)
 
+          console.log(eventObject)
+
           return  {
             id: event.id,
             type: event.type,

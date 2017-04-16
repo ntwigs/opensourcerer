@@ -52,7 +52,13 @@ export default event => {
       return {
         name: 'Watching',
         action: 'Repo',
-        experience: 10
+        experience: 15
+      }
+    case 'DeleteEvent':
+      return {
+        name: 'Deleted',
+        action: event.payload.ref_type,
+        experience: 5
       }
   }
 }
