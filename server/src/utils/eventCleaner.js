@@ -60,5 +60,11 @@ export default event => {
         action: event.payload.ref_type,
         experience: 5
       }
+    case 'ReleaseEvent':
+      return {
+        name: 'Released',
+        action: 'Repo',
+        experience: 150
+      }
   }
 }
