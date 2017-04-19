@@ -21,9 +21,9 @@ export default mongoose.model('UserSchema', mongoose.Schema({
     default: 1
   },
   titles: {
-    type: Array,
+    type: String,
     required: true,
-    default: []
+    default: 'Noob'
   },
   events: {
     type: Array,

@@ -3,6 +3,7 @@ import rp from 'request-promise'
 import UserSchema from '../schemas/UserSchema'
 import passport from 'passport'
 import eventCleaner from './eventCleaner'
+import levelCheck from './levelCheck'
 
 passport.serializeUser((user, done) => {
   done(null, user)
@@ -45,11 +46,15 @@ passport.use(new GitHubStrategy({
       }))
 
       const experience = eventArray.reduce((exp, event) => exp += event.events.experience, 0)
+      const level = levelCheck(experience)
+
       const userObject = {
         username,
         events: eventArray,
         experience,
-        avatar: profile._json.avatar_url
+        avatar: profile._json.avatar_url,
+        level,
+        titles: 'Noob'
       }
 
       await new UserSchema(userObject).save()

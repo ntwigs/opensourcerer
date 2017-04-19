@@ -40,7 +40,9 @@ router
         return res.json({
           organizedEvents,
           experience,
-          avatarUrl
+          avatarUrl,
+          level: 0,
+          titles: 'Not even a Noob'
         })
       }
 
@@ -56,7 +58,9 @@ router
       res.json({
         organizedEvents,
         experience: user.experience,
-        avatarUrl
+        level: user.level,
+        avatarUrl,
+        titles: user.titles
       })
 
     } catch(error) {
