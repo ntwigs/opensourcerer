@@ -15,6 +15,16 @@ export default mongoose.model('UserSchema', mongoose.Schema({
     required: true,
     default: 0
   },
+  level: {
+    type: Number,
+    required: true,
+    default: 1
+  },
+  titles: {
+    type: Array,
+    required: true,
+    default: []
+  },
   events: {
     type: Array,
     required: true,

@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 export default class extends Component {
   render() {
-    console.log(this.props.event.events)
     const { name, action, experience, avatar } = this.props.event.events
     
     return (
@@ -32,6 +31,7 @@ const Item = styled.div`
   img {
     width: 75px;
     border-radius: 100%;
+    background-color: white;
   }
   
   h3 {
