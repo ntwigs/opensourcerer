@@ -63,6 +63,7 @@ class Feed extends Component {
       })
 
       this.props.experienceUpdate(events.experience)
+      this.props.levelUpdate(events.level)
       this.props.avatarUpdate(events.avatarUrl)
     } catch(error) {
       console.log(error)
