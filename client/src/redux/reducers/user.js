@@ -1,7 +1,8 @@
 const defaultState = {
   experience: 0,
   avatarUrl: '',
-  level: 1
+  level: 1,
+  title: ''
 }
 
 export default ((state = defaultState, action) => {
@@ -19,6 +20,13 @@ export default ((state = defaultState, action) => {
       })
 
       return updateLevelState
+
+    case 'TITLE_UPDATE':
+      const updateTitleState = Object.assign({}, state, {
+        title: action.title
+      })
+
+      return updateTitleState
 
     case 'AVATAR_UPDATE':
       const updatedAvatarUrlState = Object.assign({}, state, {

@@ -62,7 +62,9 @@ class Feed extends Component {
         etag
       })
 
+      console.log(events)
       this.props.experienceUpdate(events.experience)
+      this.props.titleUpdate(events.titles)
       this.props.levelUpdate(events.level)
       this.props.avatarUpdate(events.avatarUrl)
     } catch(error) {

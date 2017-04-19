@@ -32,17 +32,19 @@ class Presentation extends Component {
   }
 
   render() {
+    const { avatarUrl, experience, level, title } = this.props.state.user
+
     return (
       <Header>
         <Avatar src={ this.props.state.user.avatarUrl }></Avatar>
         <h1>{ this.state.username }</h1>
-        <h5>Sourcerer</h5>
+        <h5>{ title }</h5>
         { localStorage.getItem('username') && <Logout history={ this.props.history } /> }
         <ExperienceBarContainer>
           <ExperienceBar>
-            <h5>{ this.props.state.user.level }</h5>
+            <h5>{ level }</h5>
               <ExperiencePercentage></ExperiencePercentage>
-            <h5>{ this.props.state.user.level }</h5>
+            <h5>{ level + 1 }</h5>
           </ExperienceBar>
         </ExperienceBarContainer>
         <h3>Experience: { this.props.state.user.experience }</h3>
