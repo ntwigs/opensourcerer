@@ -40,7 +40,9 @@ class Presentation extends Component {
         { localStorage.getItem('username') && <Logout history={ this.props.history } /> }
         <ExperienceBarContainer>
           <ExperienceBar>
-            <ExperiencePercentage></ExperiencePercentage>
+            <h5>{ this.props.state.user.level }</h5>
+              <ExperiencePercentage></ExperiencePercentage>
+            <h5>{ this.props.state.user.level }</h5>
           </ExperienceBar>
         </ExperienceBarContainer>
         <h3>Experience: { this.props.state.user.experience }</h3>

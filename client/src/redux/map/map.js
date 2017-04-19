@@ -1,8 +1,7 @@
 import { bindActionCreators } from 'redux'
-import { experienceUpdate, avatarUpdate } from '../actions/user'
+import * as userActions from '../actions/user'
 
 export const mapDispatchToProps = dispatch => bindActionCreators({
-  experienceUpdate,
-  avatarUpdate
+  ...userActions
 }, dispatch)
 export const mapStateToProps = state => ({ state })
