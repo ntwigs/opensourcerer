@@ -82,6 +82,8 @@ const ExperienceBar = styled.div`
   width: 200px;
   background-color: #1e202f;
   margin: 0 10px;
+  border-radius: 10px;
+  overflow: hidden;
 `
 
 const ExperiencePercentage = styled.div`

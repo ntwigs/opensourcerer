@@ -30,7 +30,6 @@ ReactDOM.render(
 
 injectGlobal`
   @import url('https://fonts.googleapis.com/css?family=Rubik+Mono+One');
-  @import url('https://fonts.googleapis.com/css?family=Concert+One');
 
   * {
     margin: 0;
@@ -43,7 +42,7 @@ injectGlobal`
     width: 100%;
     height: 100%;
     background: #1e202f;
-    font-family: 'Concert One', sans-serif;
+    font-family: 'Rubik Mono One', sans-serif;
   }
 `
 
