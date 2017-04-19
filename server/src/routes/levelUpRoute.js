@@ -40,15 +40,15 @@ router
         }
       })
       
-      const mappedNewEvents = newEvents.map(event => {
-          const eventObject = eventCleaner(event)
+      const mappedNewEvents = await Promise.all(newEvents.map(async event => {
+          const eventObject = await eventCleaner(event)
           return  {
             id: event.id,
             type: event.type,
             repo: event.repo.name,
             events: eventObject
           }
-      })
+      }))
 
       const experience = mappedNewEvents.reduce((exp, event) => exp += event.events.experience, user.experience) 
 

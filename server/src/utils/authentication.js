@@ -32,9 +32,9 @@ passport.use(new GitHubStrategy({
         json: true
       })
 
-      const eventArray = events.map(event => {
+      const eventArray = await Promise.all(events.map(async event => {
         const { id, type, repo, created_at } = event
-        const eventObject = eventCleaner(event)
+        const eventObject = await eventCleaner(event)
         return {
           id,
           type,
@@ -42,7 +42,7 @@ passport.use(new GitHubStrategy({
           repo: repo.name,
           date: created_at
         }
-      })
+      }))
 
       const experience = eventArray.reduce((exp, event) => exp += event.events.experience, 0)
       const userObject = {

@@ -23,8 +23,8 @@ router
           json: true
         })
 
-        const organizedEvents = events.map(event => {
-          const eventObject = eventCleaner(event)
+        const organizedEvents = await Promise.all(events.map(async event => {
+          const eventObject = await eventCleaner(event)
 
           return  {
             id: event.id,
@@ -32,7 +32,7 @@ router
             repo: event.repo.name,
             events: eventObject
           }
-        })
+        }))
 
         const experience = organizedEvents.reduce((exp, event) => exp += event.events.experience, 0)
         const avatarUrl = events[0].actor.avatar_url

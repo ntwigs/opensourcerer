@@ -1,90 +1,88 @@
 import rp from 'request-promise'
 
-export default event => {
-  switch(event.type) {
-    case 'IssuesEvent':
-      return {
-        name: 'Issue',
-        action: event.payload.action,
-        experience: 125,
-        avatar: getAvatar(event)
-      }
-    case 'IssueCommentEvent':
-      return {
-        name: 'Issue Comment',
-        action: event.payload.action,
-        experience: 75,
-        avatar: getAvatar(event)
-      }
-    case 'PushEvent':
-      return {
-        name: 'Push',
-        action: 'To Repo',
-        experience: 25 * event.payload.commits.length,
-        avatar: getAvatar(event)         
-      }
-    case 'PublicEvent':
-      return {
-        name: 'Repo',
-        action: 'Public',
-        experience: 500,
-        avatar: getAvatar(event)         
-      }
-    case 'PullRequestEvent':
-      return {
-        name: 'Pull Request',
-        action: event.payload.action,
-        experience: 200,
-        avatar: getAvatar(event)       
-      }
-    case 'ForkEvent': 
-      return {
-        name: 'Forked',
-        action: event.payload.forkee.name,
-        experience: 50,
-        avatar: getAvatar(event) 
-      }
-    case 'PullRequestReviewCommentEvent':
-      return {
-        name: 'Review Comment',
-        action: event.payload.action,
-        experience: 75,
-        avatar: getAvatar(event)         
-      }
-    case 'CreateEvent':
-      return {
-        name: 'Created',
-        action: 'Repo',
-        experience: 175,
-        avatar: getAvatar(event)         
-      }
-    case 'WatchEvent':
-      return {
-        name: 'Watching',
-        action: 'Repo',
-        experience: 15,
-        avatar: getAvatar(event)         
-      }
-    case 'DeleteEvent':
-      return {
-        name: 'Deleted',
-        action: event.payload.ref_type,
-        experience: 5,
-        avatar: getAvatar(event)        
-      }
-    case 'ReleaseEvent':
-      return {
-        name: 'Released',
-        action: 'Repo',
-        experience: 150,
-        avatar: getAvatar(event)       
-      }
-  }
-}
-
-const getIssueAvatar = event => {
-  if (event.payload.issue) {
-    return 
+export default async event => {
+  try {
+    switch(event.type) {
+      case 'IssuesEvent':
+        return {
+          name: 'Issue',
+          action: event.payload.action,
+          experience: 125,
+          avatar: await getAvatar(event)
+        }
+      case 'IssueCommentEvent':
+        return {
+          name: 'Issue Comment',
+          action: event.payload.action,
+          experience: 75,
+          avatar: await getAvatar(event)
+        }
+      case 'PushEvent':
+        return {
+          name: 'Push',
+          action: 'To Repo',
+          experience: 25 * event.payload.commits.length,
+          avatar: await getAvatar(event)         
+        }
+      case 'PublicEvent':
+        return {
+          name: 'Repo',
+          action: 'Public',
+          experience: 500,
+          avatar: await getAvatar(event)         
+        }
+      case 'PullRequestEvent':
+        return {
+          name: 'Pull Request',
+          action: event.payload.action,
+          experience: 200,
+          avatar: await getAvatar(event)       
+        }
+      case 'ForkEvent': 
+        return {
+          name: 'Forked',
+          action: event.payload.forkee.name,
+          experience: 50,
+          avatar: await getAvatar(event) 
+        }
+      case 'PullRequestReviewCommentEvent':
+        return {
+          name: 'Review Comment',
+          action: event.payload.action,
+          experience: 75,
+          avatar: await getAvatar(event)         
+        }
+      case 'CreateEvent':
+        return {
+          name: 'Created',
+          action: 'Repo',
+          experience: 175,
+          avatar: await getAvatar(event)         
+        }
+      case 'WatchEvent':
+        return {
+          name: 'Watching',
+          action: 'Repo',
+          experience: 15,
+          avatar: await getAvatar(event)         
+        }
+      case 'DeleteEvent':
+        return {
+          name: 'Deleted',
+          action: event.payload.ref_type,
+          experience: 5,
+          avatar: await getAvatar(event)        
+        }
+      case 'ReleaseEvent':
+        return {
+          name: 'Released',
+          action: 'Repo',
+          experience: 150,
+          avatar: await getAvatar(event)
+        }
+    }
+  } catch(error) {
+    console.log(error)
   }
 }
 
