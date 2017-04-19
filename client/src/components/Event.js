@@ -21,7 +21,6 @@ export default class extends Component {
 }
 
 
-
 const Item = styled.div`
   box-sizing: border-box;
   break-inside: avoid;

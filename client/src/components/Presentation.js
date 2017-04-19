@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
 import rp from 'request-promise'
 import styled from 'styled-components'
-import Logout from './Logout'
+import Avatar from './Avatar'
 
 class Presentation extends Component {
   state = {
@@ -15,20 +15,20 @@ class Presentation extends Component {
       json: true
     })
 
-    if (!this.props.userExists) {
-      this.setState({
-        username: `The user ${ this.props.username } does not exist`
-      })
-    } else if (user) {
+    if (user) {
       this.setState({
         username: user.username,
         experience: user.experience
       })
     } else {
       this.setState({
-        username: `The user ${ this.props.username } is not a Sourcerer`,
+        username: `${ this.props.username }`
       })
     }
+  }
+
+  getExperienceBarWidth = () => {
+    return this.props.state.user.experience / (this.props.state.user.level * 2000) * 100
   }
 
   render() {
@@ -36,18 +36,17 @@ class Presentation extends Component {
 
     return (
       <Header>
-        <Avatar src={ this.props.state.user.avatarUrl }></Avatar>
+        <Avatar url={ avatarUrl } history={ this.props.history } />
         <h1>{ this.state.username }</h1>
         <h5>{ title }</h5>
-        { localStorage.getItem('username') && <Logout history={ this.props.history } /> }
         <ExperienceBarContainer>
-          <ExperienceBar>
-            <h5>{ level }</h5>
-              <ExperiencePercentage></ExperiencePercentage>
-            <h5>{ level + 1 }</h5>
-          </ExperienceBar>
+          <h5>{ level }</h5>
+            <ExperienceBar>
+              <ExperiencePercentage  percentage={ this.getExperienceBarWidth }></ExperiencePercentage>
+            </ExperienceBar>
+          <h5>{ level + 1 }</h5>
         </ExperienceBarContainer>
-        <h3>Experience: { this.props.state.user.experience }</h3>
+        <h3>Experience: { experience }</h3>
       </Header>
     )
   }
@@ -66,19 +65,12 @@ const Header = styled.header`
   justify-content: center;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.07), 0 1px 5px 0 rgba(0,0,0,0.06), 0 3px 1px -2px rgba(0,0,0,0.1);
 `
-
-const Avatar = styled.img`
-  width: 100px;
-  height: 100px;
-  border-radius: 100%;  
-  margin-bottom: 30px;
-`
-
 const ExperienceBarContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   color: white;
+  margin: 10px 0;
 `
 
 const ExperienceBar = styled.div`
@@ -91,7 +83,8 @@ const ExperienceBar = styled.div`
 `
 
 const ExperiencePercentage = styled.div`
-  width: 75%;
+  width: ${ props => props.percentage ? props.percentage : '0' }%;
+  transition: width 1s;
   height: 100%;
   background-color: #6a93ff;
 `

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { History } from 'react-router-dom'
+import styled from 'styled-components'
 
 export default class extends Component {
   logout = () => {
@@ -11,7 +11,15 @@ export default class extends Component {
 
   render() {
     return (
-      <button onClick={ this.logout }>Logout</button>
+      <Avatar src={this.props.url} onClick={ this.logout } />
     )
   }
 }
+
+const Avatar = styled.img`
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;  
+  margin-bottom: 30px;
+  cursor: pointer;
+`
