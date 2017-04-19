@@ -3,12 +3,13 @@ import styled from 'styled-components'
 
 export default class extends Component {
   render() {
-    const { name, action, experience } = this.props.event.events
-
+    console.log(this.props.event.events)
+    const { name, action, experience, avatar } = this.props.event.events
+    
     return (
       <Item>
         <EventContainer className={ experience >= 150 ? 'large' : 'small' }>
-          <RepoImage src='https://github.com/identicons/osc.png'></RepoImage>
+          <RepoImage src={ avatar }></RepoImage>
           <TextContainer className='text-container'>
             <h3>{ name }</h3>
             <h2>{ action }</h2>

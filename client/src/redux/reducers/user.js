@@ -12,7 +12,6 @@ export default ((state = defaultState, action) => {
 
       return updatedExperienceState
     case 'AVATAR_UPDATE':
-      console.log(action)
       const updatedAvatarUrlState = Object.assign({}, state, {
         avatarUrl: action.avatarUrl
       })
