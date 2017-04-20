@@ -80,6 +80,13 @@ export default async event => {
           experience: 150,
           avatar: await getAvatar(event)
         }
+      case 'MemberEvent':
+        return {
+          name: event.payload.member.login,
+          action: event.payload.member.action,
+          experience: 25,
+          avatar: await getAvatar(event)
+        }
     }
   } catch(error) {
     console.log(error)
@@ -94,7 +101,9 @@ const getAvatar = async event => {
       return event.payload.issue.user.avatar_url
     } else if (event.payload.pull_request) {
       return event.payload.pull_request.base.user.avatar_url
-    } else if (event.type === 'WatchEvent'  ||
+    } else if (event.payload.member) {
+      return event.payload.member.avatar_url
+    } else if (event.type === 'WatchEvent'  || // Something is wrong here
                event.type === 'PushEvent'   ||
                event.type === 'ForkEvent'   ||
                event.type === 'ReleaseEvent') {

@@ -1,5 +1,5 @@
 0 info it worked if it ends with ok
-1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'run', 'start' ]
+1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'start' ]
 2 info using npm@3.10.3
 3 info using node@v6.6.0
 4 verbose stack Error: missing script: start
@@ -14,7 +14,7 @@
 4 verbose stack     at FSReqWrap.readFileAfterOpen [as oncomplete] (fs.js:365:13)
 5 verbose cwd /home/slask/Code/personal/opensourcerer/server
 6 error Linux 4.8.11-040811-generic
-7 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "start"
+7 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "start"
 8 error node v6.6.0
 9 error npm  v3.10.3
 10 error missing script: start

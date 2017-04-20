@@ -34,8 +34,11 @@ router
           }
         }))
 
+        console.log(organizedEvents)
+
         const experience = organizedEvents.reduce((exp, event) => exp += event.events.experience, 0)
         const avatarUrl = events[0].actor.avatar_url
+        
 
         return res.json({
           organizedEvents,
