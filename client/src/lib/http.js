@@ -1,4 +1,5 @@
 import { FOR_DEV } from '../secret'
+import rp from 'request-promise'
 
 export const getEtag = async (username, etag) => await rp(`https://api.github.com/users/${ username }/events`, {
   method: 'HEAD',
@@ -23,10 +24,10 @@ export const getNewEvents = async username => await rp(`http://localhost:3001/le
   json: true
 })
 
-export const getEtagStatus = async etag => await rp(`http://localhost:3001/users/${ username }/`, {
-  method: 'GET',
+export const getEtagStatus = async (username, etag) => await rp(`http://localhost:3001/users/${ username }`, {
+  method: 'HEAD',
   body: {
-    username: username
+    etag
   },
   json: true
 })

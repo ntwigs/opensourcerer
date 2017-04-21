@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
-import rp from 'request-promise'
 import styled from 'styled-components'
 import Avatar from './Avatar'
 import { getUserInformation } from '../lib/http'

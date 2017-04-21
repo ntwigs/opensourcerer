@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
-import rp from 'request-promise'
 import styled from 'styled-components'
 import Event from './Event'
-import { getEtag, getNewEvents, getInitialEvents } from '../lib/http'
+import { getEtag, getNewEvents, getInitialEvents, getEtagStatus } from '../lib/http'
 
 class Feed extends Component {
-  POLL_TIME = 1000 // How often to poll GitHub
+  POLL_TIME = 10000 // How often to poll GitHub
   state = {
     events: [],
     etag: undefined
@@ -19,14 +18,17 @@ class Feed extends Component {
 
   refreshEvents = async () => {
     try {
-      const userEvents = await getEtag(this.props.username, this.state.etag)
+      const userHeader = await getEtag(this.props.username, this.state.etag)
+      const { etag } = userHeader.headers
 
       if (this.state.etag === undefined) {
-        await this.fetchInitialEvents(userEvents.headers.etag)
+        await this.fetchInitialEvents(etag)
+        const etagStatus = await getEtagStatus(this.props.username, etag)
+        etagStatus.isNew && this.fetchNewEvents(etag)
       }
 
-      if (userEvents.headers.etag !== this.state.etag) {
-        await this.fetchNewEvents(userEvents.headers.etag)
+      if (etag !== this.state.etag) {
+        await this.fetchNewEvents(etag)
       }
 
       this.restart()
