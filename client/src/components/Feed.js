@@ -4,7 +4,7 @@ import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
 import rp from 'request-promise'
 import styled from 'styled-components'
 import Event from './Event'
-import { FOR_DEV } from '../secret'
+import { getEtag, getNewEvents, getInitialEvents } from '../lib/http'
 
 class Feed extends Component {
   POLL_TIME = 1000 // How often to poll GitHub
@@ -19,15 +19,7 @@ class Feed extends Component {
 
   refreshEvents = async () => {
     try {
-      const userEvents = await rp(`https://api.github.com/users/${ this.props.username }/events`, {
-        method: 'HEAD',
-        headers: {
-          'If-None-Match': this.state.etag,
-          Authorization: `Bearer ${ FOR_DEV }`
-        },
-        json: true,
-        resolveWithFullResponse: true
-      })
+      const userEvents = await getEtag(this.props.username, this.state.etag)
 
       if (this.state.etag === undefined) {
         await this.fetchInitialEvents(userEvents.headers.etag)
@@ -52,17 +44,13 @@ class Feed extends Component {
 
   fetchInitialEvents = async etag => {
     try {
-      const events = await rp(`http://localhost:3001/events/${ this.props.username }`, {
-        method: 'GET',
-        json: true
-      })
+      const events = await getInitialEvents(this.props.username)
 
       this.setState({
         events: events.organizedEvents,
         etag
       })
 
-      console.log(events)
       this.props.experienceUpdate(events.experience)
       this.props.titleUpdate(events.titles)
       this.props.levelUpdate(events.level)
@@ -74,13 +62,7 @@ class Feed extends Component {
 
   fetchNewEvents = async etag => {
     try {
-      const newEvents = await rp(`http://localhost:3001/levelup`, {
-        method: 'POST',
-        body: {
-          username: this.props.username
-        },
-        json: true
-      })
+      const newEvents = await getNewEvents(this.props.username)
 
       this.setState({
         events: [...newEvents.events, ...this.state.events],

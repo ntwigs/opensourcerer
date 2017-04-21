@@ -4,6 +4,7 @@ import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
 import rp from 'request-promise'
 import styled from 'styled-components'
 import Avatar from './Avatar'
+import { getUserInformation } from '../lib/http'
 
 class Presentation extends Component {
   state = {
@@ -11,9 +12,7 @@ class Presentation extends Component {
   }
 
   componentDidMount = async () => {
-    const user = await rp(`http://localhost:3001/users/${ this.props.username }`, {
-      json: true
-    })
+    const user = await getUserInformation(this.props.username)
 
     if (user) {
       this.setState({
