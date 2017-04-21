@@ -1,4 +1,4 @@
-import setEventObject from './setEventObject'
+import setEventObjects from './setEventObjects'
 import rp from 'request-promise'
 
 export default async username => {
