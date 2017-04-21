@@ -54,7 +54,7 @@ router
       const experience = mappedNewEvents.reduce((exp, event) => exp += event.events.experience, user.experience) 
       const level = levelCheck(experience)
 
-      const updatedUser = await UserSchema.findOneAndUpdate({ username }, {
+      const updatedUser = await UserSchema.findOneAndUpdate({ username: user.username }, {
         events: [...mappedNewEvents, ...user.events],
         experience,
         level
