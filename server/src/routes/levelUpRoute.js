@@ -3,6 +3,7 @@ import passport from 'passport'
 import rp from 'request-promise'
 import UserSchema from '../schemas/UserSchema'
 import eventCleaner from '../utils/eventCleaner'
+import levelCheck from '../utils/levelCheck'
 const router = express.Router()
 
 router
