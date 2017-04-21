@@ -10,7 +10,7 @@ router
       const user = await UserSchema.findOne(
         { username: { $regex: username, $options: 'i' } }
       )
-      console.log('du kommer hit iallafall')
+
       return user.etag === etag ? res.json({ isNew: true }) : res.json({ isNew: false })
     } catch(error) {
       console.log(error)

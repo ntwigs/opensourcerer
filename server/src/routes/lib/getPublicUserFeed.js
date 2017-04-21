@@ -11,7 +11,7 @@ export default async username => {
     json: true
   })
 
-  const organizedEvents = await setEventObject(events) 
+  const organizedEvents = await setEventObjects(events) 
   const experience = organizedEvents.reduce((exp, event) => exp += event.events.experience, 0)
   const avatarUrl = events[0].actor.avatar_url
 

@@ -22,7 +22,7 @@ export default async username => {
     }
   })
 
-  const organizedEvents = await setEventObject(newEvents)
+  const organizedEvents = await setEventObjects(newEvents)
   const experience = organizedEvents.reduce((exp, event) => exp += event.events.experience, user.experience)
   const level = levelCheck(experience)
 
