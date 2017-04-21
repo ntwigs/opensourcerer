@@ -14,15 +14,6 @@ router
       )
 
       if (!user) {
-        const events = await rp(`https://api.github.com/users/${ username }/events`, {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${ process.env.GITHUB_ACCESS_TOKEN }`,
-            'User-Agent': 'NorthernTwig'
-          },
-          json: true
-        })
-
         const organizedEvents = await Promise.all(events.map(async event => {
           const eventObject = await eventCleaner(event)
 
@@ -33,8 +24,6 @@ router
             events: eventObject
           }
         }))
-
-        console.log(organizedEvents)
 
         const experience = organizedEvents.reduce((exp, event) => exp += event.events.experience, 0)
         const avatarUrl = events[0].actor.avatar_url
