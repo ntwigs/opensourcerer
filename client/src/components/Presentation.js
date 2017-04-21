@@ -64,6 +64,8 @@ const Header = styled.header`
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.07), 0 1px 5px 0 rgba(0,0,0,0.06), 0 3px 1px -2px rgba(0,0,0,0.1);
+  padding: 25px 0;
+  margin-bottom: 10px;
 `
 const ExperienceBarContainer = styled.div`
   display: flex;
