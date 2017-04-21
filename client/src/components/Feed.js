@@ -20,10 +20,10 @@ class Feed extends Component {
     try {
       const userHeader = await getEtag(this.props.username, this.state.etag)
       const { etag } = userHeader.headers
-
+      console.log(etag)
       if (this.state.etag === undefined) {
         await this.fetchInitialEvents(etag)
-        const etagStatus = await getEtagStatus(this.props.username, etag)
+        const etagStatus = await getEtagStatus(this.props.username, etag.split('W/').join(''))
         etagStatus.isNew && this.fetchNewEvents(etag)
       }
 

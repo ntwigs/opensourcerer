@@ -24,11 +24,8 @@ export const getNewEvents = async username => await rp(`http://localhost:3001/le
   json: true
 })
 
-export const getEtagStatus = async (username, etag) => await rp(`http://localhost:3001/users/${ username }`, {
-  method: 'HEAD',
-  body: {
-    etag
-  },
+export const getEtagStatus = async (username, etag) => await rp(`http://localhost:3001/users/${ username }/${ etag }`, {
+  method: 'GET',
   json: true
 })
 
