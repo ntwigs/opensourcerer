@@ -1,8 +1,9 @@
 import setEventObjects from './setEventObjects'
+import levelCheck from '../../utils/levelCheck'
 import rp from 'request-promise'
 
-export default async username => {
-  const events = await rp(`https://api.github.com/users/${ username }/events`, {
+export default async user => {
+  const events = await rp(`https://api.github.com/users/${ user.username }/events`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${ process.env.GITHUB_ACCESS_TOKEN }`,

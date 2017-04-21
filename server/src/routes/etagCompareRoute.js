@@ -3,7 +3,7 @@ import UserSchema from '../schemas/UserSchema'
 const router = express.Router()
 
 router
-  .head('/users/:username', async (req, res) => {
+  .get('/users/:username/:etag', async (req, res) => {
     try {
       const { username, etag } = req.params
 
@@ -11,7 +11,7 @@ router
         { username: { $regex: username, $options: 'i' } }
       )
 
-      return user.etag === etag ? res.json({ isNew: true }) : res.json({ isNew: false })
+      return user.etag !== etag ? res.json({ isNew: true }) : res.json({ isNew: false })
     } catch(error) {
       console.log(error)
     }
