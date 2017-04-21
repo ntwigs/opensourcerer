@@ -12,6 +12,7 @@ import authRoute from './routes/authRoute'
 import userRoute from './routes/userRoute'
 import eventsRoute from './routes/eventsRoute'
 import levelUpRoute from './routes/levelUpRoute'
+import etagCompareRoute from './routes/etagCompareRoute'
 
 const app = express()
 const PORT = 3001
@@ -26,6 +27,7 @@ app.use(userRoute)
 app.use(mainRoute)
 app.use(eventsRoute)
 app.use(levelUpRoute)
+app.use(etagCompareRoute)
 
 app.listen(PORT, () => {
     console.log(`Up and running on port : ${ PORT }`)

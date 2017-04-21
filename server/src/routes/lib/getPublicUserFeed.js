@@ -1,3 +1,6 @@
+import setEventObject from './setEventObject'
+import rp from 'request-promise'
+
 export default async username => {
   const events = await rp(`https://api.github.com/users/${ username }/events`, {
     method: 'GET',
@@ -8,21 +11,9 @@ export default async username => {
     json: true
   })
 
-  const organizedEvents = await Promise.all(events.map(async event => {
-    const eventObject = await eventCleaner(event)
-
-    return {
-      id: event.id,
-      type: event.type,
-      repo: event.repo.name,
-      events: eventObject
-    }
-  }))
-
+  const organizedEvents = await setEventObject(events) 
   const experience = organizedEvents.reduce((exp, event) => exp += event.events.experience, 0)
   const avatarUrl = events[0].actor.avatar_url
-
-
 
   return {
     organizedEvents,
