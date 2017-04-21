@@ -30,6 +30,10 @@ export default mongoose.model('UserSchema', mongoose.Schema({
     required: true,
     default: []  
   },
+  etag: {
+    type: String,
+    default: ''
+  },
   date: {
     type: Date,
     default: Date.now,

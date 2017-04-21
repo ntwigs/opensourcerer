@@ -110,7 +110,7 @@ const getAvatar = async event => {
       return event.payload.pull_request.base.user.avatar_url
     } else if (event.payload.member) {
       return event.payload.member.avatar_url
-    } else if (event.type === 'WatchEvent'  || // Something is wrong here
+    } else if (event.type === 'WatchEvent'  ||
                event.type === 'PushEvent'   ||
                event.type === 'ForkEvent'   ||
                event.type === 'ReleaseEvent') {
