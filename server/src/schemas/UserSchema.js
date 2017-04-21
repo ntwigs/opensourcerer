@@ -30,6 +30,10 @@ export default mongoose.model('UserSchema', mongoose.Schema({
     required: true,
     default: []  
   },
+  accessToken: {
+    type: String,
+    required: true
+  },
   etag: {
     type: String,
     default: ''
