@@ -83,7 +83,7 @@ export default async event => {
       case 'MemberEvent':
         return {
           name: event.payload.member.login,
-          action: event.payload.member.action,
+          action: event.payload.action,
           experience: 25,
           avatar: await getAvatar(event)
         }
