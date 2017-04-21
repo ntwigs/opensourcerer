@@ -87,6 +87,13 @@ export default async event => {
           experience: 25,
           avatar: await getAvatar(event)
         }
+      case 'GollumEvent':
+        return {
+          name: 'Wiki',
+          action: event.payload.pages[0].action,
+          experience: 25,
+          avatar: await getAvatar(event)
+        }
     }
   } catch(error) {
     console.log(error)
