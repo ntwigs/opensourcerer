@@ -8,9 +8,9 @@ import fetchNewEvents from './lib/fetchNewEvents'
 const router = express.Router()
 
 router
-  .post('/levelup', async (req, res) => {
+  .get('/users/:username/levelup', async (req, res) => {
     try {
-      const { username } = req.body
+      const { username } = req.params
 
       const user = await UserSchema.findOne(
         { username: { $regex: username, $options: 'i' } }
@@ -23,6 +23,7 @@ router
       }
 
       const newEvents = await fetchNewEvents(user)
+
       const updatedUserObject = {
         events: [...newEvents.newEvents, ...user.events],
         experience: newEvents.experience,
@@ -33,7 +34,7 @@ router
         username: user.username
       }, updatedUserObject)
 
-      res.json(updatedUserObject)
+      res.json(newEvents)
     } catch(error) {
       console.log(error)
     }

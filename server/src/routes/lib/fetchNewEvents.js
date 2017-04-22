@@ -23,7 +23,7 @@ export default async user => {
     }
   })
 
-  const organizedEvents = await setEventObjects(newEvents)
+  const organizedEvents = newEvents.length > 0 ? await setEventObjects(newEvents) : []
   const experience = organizedEvents.reduce((exp, event) => exp += event.events.experience, user.experience)
   const level = levelCheck(experience)
 
