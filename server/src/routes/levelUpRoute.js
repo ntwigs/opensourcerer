@@ -25,8 +25,8 @@ router
       const newEvents = await fetchNewEvents(user)
       const updatedUserObject = {
         events: [...newEvents.newEvents, ...user.events],
-        experience,
-        level
+        experience: newEvents.experience,
+        level: newEvents.level
       }
 
       const updatedUser = await UserSchema.findOneAndUpdate({
