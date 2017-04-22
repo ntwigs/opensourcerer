@@ -20,11 +20,12 @@ class Feed extends Component {
     try {
       const userHeader = await getEtag(this.props.username, this.state.etag)
       const { etag } = userHeader.headers
-      console.log(etag)
+
       if (this.state.etag === undefined) {
         await this.fetchInitialEvents(etag)
-        const etagStatus = await getEtagStatus(this.props.username, etag.split('W/').join(''))
-        etagStatus.isNew && this.fetchNewEvents(etag)
+        await this.fetchNewEvents(etag)
+        // const etagStatus = await getEtagStatus(this.props.username, etag.split('W/').join(''))
+        // etagStatus.isNew && this.fetchNewEvents(etag)
       }
 
       if (etag !== this.state.etag) {
@@ -65,7 +66,7 @@ class Feed extends Component {
   fetchNewEvents = async etag => {
     try {
       const newEvents = await getNewEvents(this.props.username)
-
+console.log(newEvents)
       this.setState({
         events: [...newEvents.events, ...this.state.events],
         etag

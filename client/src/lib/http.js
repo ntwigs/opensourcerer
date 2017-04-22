@@ -16,11 +16,8 @@ export const getInitialEvents = async username => await rp(`http://localhost:300
   json: true
 })
 
-export const getNewEvents = async username => await rp(`http://localhost:3001/levelup`, {
-  method: 'POST',
-  body: {
-    username: username
-  },
+export const getNewEvents = async username => await rp(`http://localhost:3001/users/${ username }/levelup`, {
+  method: 'GET',
   json: true
 })
 
