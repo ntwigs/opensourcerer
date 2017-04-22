@@ -23,9 +23,7 @@ class Feed extends Component {
 
       if (this.state.etag === undefined) {
         await this.fetchInitialEvents(etag)
-        await this.fetchNewEvents(etag)
-        // const etagStatus = await getEtagStatus(this.props.username, etag.split('W/').join(''))
-        // etagStatus.isNew && this.fetchNewEvents(etag)
+        this.props.state.user.level !== 0 && await this.fetchNewEvents(etag)
       }
 
       if (etag !== this.state.etag) {
@@ -73,6 +71,7 @@ class Feed extends Component {
       })
 
       this.props.experienceUpdate(newEvents.experience)
+
     } catch(error) {
       console.log(error)
     }

@@ -41,6 +41,7 @@ const Item = styled.div`
   h2 {
     font-size: 1em;
     color: #10121d;
+    text-align: end;
   }
  
   h1 {
