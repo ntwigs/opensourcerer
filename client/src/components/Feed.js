@@ -66,9 +66,9 @@ class Feed extends Component {
   fetchNewEvents = async etag => {
     try {
       const newEvents = await getNewEvents(this.props.username)
-console.log(newEvents)
+
       this.setState({
-        events: [...newEvents.events, ...this.state.events],
+        events: [...newEvents.newEvents, ...this.state.events],
         etag
       })
 
