@@ -3,14 +3,15 @@ import UserSchema from '../../schemas/UserSchema'
 
 
 export const getUserEvents = async req => {
-  const { id } = req.user
   const { username } = req.params
-  const user = UserSchema.findOne({ _id: id })
+  const id = req.user ? req.user.id : undefined 
+  const user = id ? UserSchema.findOne({ _id: id }) : undefined
+  const accessToken = user ? user.accessToken : undefined
 
   return await rp(`https://api.github.com/users/${ username }/events`, {
     method: 'GET',
     headers: {
-      Authorization: user.accessToken,
+      Authorization: accessToken,
       'User-Agent': 'Opensourcerer'
     },
     json: true
