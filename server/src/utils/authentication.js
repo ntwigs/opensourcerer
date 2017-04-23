@@ -20,9 +20,10 @@ passport.use(new GitHubStrategy({
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     if (!profile) throw new Error('No profile!')
-    const { username } = profile
 
+    const { username } = profile
     const user = await UserSchema.findOne({ username })
+
     if (!user) {
       const events = await rp(`https://api.github.com/users/${ username }/events`, {
         method: 'GET',
@@ -54,10 +55,15 @@ passport.use(new GitHubStrategy({
         experience,
         avatar: profile._json.avatar_url,
         level,
-        titles: 'Noob'
+        titles: 'Noob',
+        accessToken
       }
 
       await new UserSchema(userObject).save()
+    } else {
+      await UserSchema.findOneAndUpdate({ username }, {
+        accessToken
+      })
     }
 
     done(null, profile)

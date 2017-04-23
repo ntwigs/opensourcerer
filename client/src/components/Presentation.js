@@ -65,6 +65,7 @@ const Header = styled.header`
   padding: 25px 0;
   margin-bottom: 10px;
 `
+
 const ExperienceBarContainer = styled.div`
   display: flex;
   flex-direction: row;

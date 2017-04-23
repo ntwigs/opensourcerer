@@ -1,6 +1,7 @@
 import express from 'express'
 import passport from 'passport'
 import UserSchema from '../schemas/UserSchema'
+import jwt from 'jsonwebtoken'
 import '../utils/authentication'
 const router = express.Router()
 
@@ -22,7 +23,9 @@ router
 
         if (!existingUser) await res.redirect('http://localhost:3000/')
 
-        await res.redirect(`http://localhost:3000/?username=${ existingUser.username }`)
+        const token = jwt.sign({ username: existingUser.username, id: existingUser._id }, process.env.JWT_SECRET)
+
+        await res.redirect(`http://localhost:3000/?username=${ existingUser.username }&token=${ token }`)
 
       } catch(error) {
         console.log(error)
