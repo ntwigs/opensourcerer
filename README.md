@@ -13,3 +13,4 @@ An initiative to get more people involved with opensource.
 * Fancy animations
 * Leaderboard / Highscore
 * Inventory
+* Opensource daily streak
