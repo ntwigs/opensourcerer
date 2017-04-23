@@ -9,6 +9,7 @@ An initiative to get more people involved with opensource.
 ### To be implemented
 * Titles
 * Hats
+* Trophies
 * Fancy animations
-* Leaderboard
+* Leaderboard / Highscore
 * Inventory
