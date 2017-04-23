@@ -4,9 +4,13 @@ import { connect } from 'react-redux'
 import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
 
 class Backpack extends Component {
+  openInventory = () => {
+    this.props.openInventory()
+  }
+
   render() {
     return (
-      <BackpackIcon />
+      <BackpackIcon onClick={ this.openInventory } />
     )
   }
 }

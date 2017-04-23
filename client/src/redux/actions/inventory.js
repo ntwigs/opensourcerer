@@ -1,4 +1,6 @@
-import { validateJwt } from '../../lib/http'
+import { getInventory } from '../../lib/http'
 
-export const openInventory = () => ({ type: 'OPEN_INVENTORY' })
-
+export const openInventory = () => ({
+  type: 'OPEN_INVENTORY',
+  inventory: getInventory()
+})

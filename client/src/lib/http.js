@@ -47,7 +47,6 @@ export const getUserInformation = async username => {
 
 export const getInventory = async () => {
   const username = localStorage.getItem('username')
-  
   return await rp(`http://localhost:3001/users/${ username }/inventory`, {
     headers: {
       Authorization: getToken()
