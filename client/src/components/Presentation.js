@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
 import styled from 'styled-components'
 import Avatar from './Avatar'
+import Backpack from './Backpack'
 import { getUserInformation } from '../lib/http'
 
 class Presentation extends Component {
@@ -34,7 +35,10 @@ class Presentation extends Component {
 
     return (
       <Header>
-        <Avatar url={ avatarUrl } history={ this.props.history } />
+        <div>
+          <Avatar url={ avatarUrl } history={ this.props.history } />
+          <Backpack></Backpack>
+        </div>
         <h1>{ this.state.username }</h1>
         <h5>{ title }</h5>
         <ExperienceBarContainer>
