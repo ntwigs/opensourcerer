@@ -4,13 +4,24 @@ import { connect } from 'react-redux'
 import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
 
 class Inventory extends Component {
+  getSection = () => {
+    if (this.props.state.inventory.open) {
+      return (
+        <InventorySection>
+          <InventorySection  />
+        </InventorySection>
+      )
+    }
+
+    return <div></div>
+  }
+
+
   render() {
-    console.log(this.props.state.inventory.open)
-    return (
-      <section>
-        { this.props.state.inventory.open && <InventorySection  /> }
-      </section>
-    )
+
+
+
+    return this.getSection()
   }
 }
 
@@ -22,5 +33,6 @@ const InventorySection = styled.section`
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: red;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 1;
 `
