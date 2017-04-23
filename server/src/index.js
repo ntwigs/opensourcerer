@@ -17,15 +17,15 @@ import levelUpRoute from './routes/levelUpRoute'
 const app = express()
 const PORT = 3001
 
-app.use(jwt({
-    secret: process.env.JWT_SECRET,
-    credentialsRequired: false
-}))
-
 app.use(cors())
 app.use(bodyParser.json())
 app.use(passport.initialize())
 app.use(passport.session())
+
+app.use(jwt({
+    secret: process.env.JWT_SECRET,
+    credentialsRequired: false
+}))
 
 app.use(authRoute)
 app.use(userRoute)

@@ -4,7 +4,6 @@ import rp from 'request-promise'
 import eventCleaner from '../utils/eventCleaner'
 import UserSchema from '../schemas/UserSchema'
 import getPublicUserFeed from './lib/getPublicUserFeed'
-import getUserToken from './lib/getUserToken'
 const router = express.Router()
 
 router
