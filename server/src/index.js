@@ -12,7 +12,6 @@ import mainRoute from './routes/mainRoute'
 import authRoute from './routes/authRoute'
 import userRoute from './routes/userRoute'
 import eventsRoute from './routes/eventsRoute'
-import levelUpRoute from './routes/levelUpRoute'
 
 const app = express()
 const PORT = 3001
@@ -31,7 +30,6 @@ app.use(authRoute)
 app.use(userRoute)
 app.use(mainRoute)
 app.use(eventsRoute)
-app.use(levelUpRoute)
 
 app.listen(PORT, () => {
     console.log(`Up and running on port : ${ PORT }`)
