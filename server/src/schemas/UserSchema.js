@@ -21,9 +21,17 @@ export default mongoose.model('UserSchema', mongoose.Schema({
     default: 1
   },
   titles: {
-    type: String,
+    type: Array,
     required: true,
-    default: 'Noob'
+    default: ['Noob']
+  },
+  hats: {
+    type: Array,
+    default: []
+  },
+  trophies: {
+    type: Array,
+    default: []
   },
   events: {
     type: Array,
