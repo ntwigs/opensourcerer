@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
 
 class Inventory extends Component {
-
+  getUsername = () => (localStorage.getItem('username'))
 
   getSection = () => {
     if (this.props.state.inventory.open) {
@@ -13,6 +13,7 @@ class Inventory extends Component {
           <Items>
             <LeftSection>
               <Avatar src={ this.props.state.user.avatarUrl }/>
+              <h1>{ this.getUsername() }</h1>
             </LeftSection>
             <RightSection>
               <TrophyShelf/>
