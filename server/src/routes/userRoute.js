@@ -52,7 +52,9 @@ router
     const { username } = req.params
     
     if (req.user.username !== username) {
-      return res.send(false)
+      return res.json({
+        available: false
+      })
     } 
 
     const user = await UserSchema.findOne(
@@ -60,6 +62,7 @@ router
     )
 
     const inventoryObject = {
+      available: true,
       titles: user.titles,
       trophies: user.trophies,
       hats: user.hats
