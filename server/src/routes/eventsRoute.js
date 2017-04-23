@@ -4,6 +4,7 @@ import rp from 'request-promise'
 import eventCleaner from '../utils/eventCleaner'
 import UserSchema from '../schemas/UserSchema'
 import getPublicUserFeed from './lib/getPublicUserFeed'
+import getUserToken from './lib/getUserToken'
 const router = express.Router()
 
 router
@@ -15,7 +16,7 @@ router
       )
 
       if (!user) {
-        const unregisteredUserObject = await getPublicUserFeed(username)
+        const unregisteredUserObject = await getPublicUserFeed(req)
         return res.json(unregisteredUserObject)
       }
 

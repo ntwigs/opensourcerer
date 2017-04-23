@@ -11,7 +11,6 @@ router
   .get('/users/:username/levelup', async (req, res) => {
     try {
       const { username } = req.params
-
       const user = await UserSchema.findOne(
         { username: { $regex: username, $options: 'i' } }
       )
@@ -22,7 +21,7 @@ router
         })
       }
 
-      const newEvents = await fetchNewEvents(user)
+      const newEvents = await fetchNewEvents(user, req)
 
       const updatedUserObject = {
         events: [...newEvents.newEvents, ...user.events],

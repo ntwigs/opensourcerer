@@ -7,6 +7,7 @@ import mongoDB from './utils/mongoDB'
 import passport from 'passport'
 import bodyParser from 'body-parser'
 import cors from 'cors'
+import jwt from 'express-jwt'
 import mainRoute from './routes/mainRoute'
 import authRoute from './routes/authRoute'
 import userRoute from './routes/userRoute'
@@ -15,6 +16,11 @@ import levelUpRoute from './routes/levelUpRoute'
 
 const app = express()
 const PORT = 3001
+
+app.use(jwt({
+    secret: process.env.JWT_SECRET,
+    credentialsRequired: false
+}))
 
 app.use(cors())
 app.use(bodyParser.json())
