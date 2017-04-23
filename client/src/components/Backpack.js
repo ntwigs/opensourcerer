@@ -18,4 +18,5 @@ const BackpackIcon = styled.div`
   height: 35px;
   background-color: #6a93ff;
   border-radius: 100%;
+  cursor: pointer;
 `
