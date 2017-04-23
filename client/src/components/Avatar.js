@@ -3,7 +3,8 @@ import styled from 'styled-components'
 
 export default class extends Component {
   logout = () => {
-    localStorage.removeItem('username') && localStorage.removeItem('token')
+    localStorage.removeItem('username')
+    localStorage.removeItem('token')
     this.props.history.replace({
       pathname: `/`
     })

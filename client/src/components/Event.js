@@ -8,7 +8,7 @@ export default class extends Component {
     return (
       <Item>
         <EventContainer className={ experience >= 150 ? 'large' : 'small' }>
-          <RepoImage alt='repo avatar' src={ avatar}></RepoImage>
+          <RepoImage alt='repo avatar' src={ avatar }></RepoImage>
           <TextContainer className='text-container'>
             <h3>{ name }</h3>
             <h2>{ action }</h2>
