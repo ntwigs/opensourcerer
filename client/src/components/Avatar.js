@@ -12,7 +12,7 @@ export default class extends Component {
 
   render() {
     return (
-      <Avatar src={this.props.url} onClick={ this.logout } />
+      <Avatar src={ this.props.url } onClick={ this.logout } />
     )
   }
 }
