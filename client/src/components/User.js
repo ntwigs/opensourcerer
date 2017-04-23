@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
 import styled from 'styled-components'
 import Feed from './Feed'
+import Inventory from './Inventory'
 
 class User extends Component {
   state = {
@@ -46,6 +47,7 @@ class User extends Component {
   render() {
     return (
       <MainContainer>
+        <Inventory/>
         { this.setText() }
         <Feed 
           setUserDoesNotExists={ this.setUserDoesNotExists }

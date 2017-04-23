@@ -2,10 +2,16 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
+import { getInventory } from '../lib/http'
 
 class Backpack extends Component {
-  openInventory = () => {
-    this.props.openInventory()
+  openInventory = async () => {
+    try {
+      const inventory = await getInventory()
+      this.props.openInventory(inventory)
+    } catch(error) {
+      console.log(error)
+    }
   }
 
   render() {

@@ -7,7 +7,7 @@ const defaultState = {
 
 export default ((state = defaultState, action) => {
   switch(action.type) {
-    case 'OPEN_INVENTORY_FULFILLED':
+    case 'OPEN_INVENTORY':
       const { available, titles, trophies, hats } = action.inventory
 
       if (!action.inventory.available) {
@@ -21,7 +21,7 @@ export default ((state = defaultState, action) => {
         hats
       })
 
-      return state
+      return updatedInventoryState
     default:
       return state
   }
