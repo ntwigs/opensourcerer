@@ -10,8 +10,7 @@ export const getEtag = async (username, etag) => {
   return await rp(`https://api.github.com/users/${ username }/events`, {
     method: 'HEAD',
     headers: {
-      'If-None-Match': etag,
-      Authorization: `Bearer ${ FOR_DEV }`
+      'If-None-Match': etag
     },
     json: true,
     resolveWithFullResponse: true
