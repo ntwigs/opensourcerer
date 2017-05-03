@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled, { keyframes } from 'styled-components'
 import { connect } from 'react-redux'
 import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
+import AvatarCanvas from './AvatarCanvas/AvatarCanvas'
 
 class Inventory extends Component {
   getUsername = () => (localStorage.getItem('username'))
@@ -12,7 +13,8 @@ class Inventory extends Component {
         <InventorySection>
           <Items>
             <LeftSection>
-              <Avatar src={ this.props.state.user.avatarUrl }/>
+              {/*<Avatar src={ this.props.state.user.avatarUrl }/>*/}
+              <AvatarCanvas />
               <h1>{ this.getUsername() }</h1>
             </LeftSection>
             <RightSection>
