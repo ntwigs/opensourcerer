@@ -1,17 +1,24 @@
 const defaultState = {
-  hat: undefined
+  hat: undefined,
+  isHatRendered: false
 }
 
 export default ((state = defaultState, action) => {
   switch(action.type) {
     case 'SET_HAT':
-      const { hat } = action
-
       const updatedHatState = Object.assign({}, state, {
-          hat
+          hat: action.hat
       })
 
       return updatedHatState
+
+    case 'IS_HAT_RENDERED':
+      const updatedHatRenderState = Object.assign({}, state, {
+          isHatRendered: !state.isHatRendered
+      })
+
+      return updatedHatRenderState
+      
     default:
       return state
   }
