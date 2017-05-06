@@ -1,12 +1,14 @@
 export default class {
-  constructor(x, y, ctx) {
+  constructor(x, y, ctx, src) {
     this.x = x
     this.y = y
     this.ctx = ctx
+    this.hat = new Image()
+    this.hat.src = src
+    this.selected = false
   }
 
   render() {
-    this.ctx.fillStyle = '#FF00FF'
-    this.ctx.fillRect(this.x, this.y, 100, 100)
+    this.ctx.drawImage(this.hat, this.x, this.y)
   }
 }
