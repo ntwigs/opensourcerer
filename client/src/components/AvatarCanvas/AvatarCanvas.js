@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
+import Hat from './Hat'
 
 export default class extends Component {
   componentDidMount = () => {
     this.canvas = this.canvasReference
     this.ctx = this.canvas.getContext('2d')
+    this.hat = new Hat(0, 0, this.ctx)
     this.update()
   }
 
@@ -14,9 +16,15 @@ export default class extends Component {
   update = () => {
     this.clear()
 
-    // Animation goes here
+    if (this.hat) {
+      this.renderHat()
+    }
 
     requestAnimationFrame(() => this.update())
+  }
+
+  renderHat = () => {
+    this.hat.render()
   }
 
   render() {
