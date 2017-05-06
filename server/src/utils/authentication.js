@@ -28,8 +28,8 @@ passport.use(new GitHubStrategy({
       const events = await rp(`https://api.github.com/users/${ username }/events`, {
         method: 'GET',
         headers: {
-          Authorization: `Bearer ${ process.env.GITHUB_ACCESS_TOKEN }`,
-          'User-Agent': 'NorthernTwig'
+          Authorization: `Bearer ${ accessToken }`,
+          'User-Agent': 'OpenSourcerer'
         },
         json: true
       })
