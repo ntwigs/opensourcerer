@@ -7,6 +7,10 @@ import AvatarCanvas from './AvatarCanvas/AvatarCanvas'
 class Inventory extends Component {
   getUsername = () => (localStorage.getItem('username'))
 
+  setHat = (e, data) => {
+    console.log(e.target['data-hat'])
+  }
+
   getSection = () => {
     if (this.props.state.inventory.open) {
       return (
@@ -19,12 +23,16 @@ class Inventory extends Component {
             <RightSection>
               <TrophyShelf/>
               <ItemShelf>
-                <ItemSlot/>
-                <ItemSlot/>
-                <ItemSlot/>
-                <ItemSlot/>
-                <ItemSlot/>
-                <ItemSlot/>
+                <ItemSlot onClick={ this.setHat }>
+                  <HatOne xmlns="http://www.w3.org/2000/svg" data-hat='one' version="1.1" class="svg-triangle" color="red" width='100' height='100'>
+                    <path d="M 50,5 95,97.5 5,97.5 z"/>
+                  </HatOne>
+                </ItemSlot>
+                <ItemSlot onClick={ this.setHat }>
+                  <HatTwo xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-triangle" width='100' height='100'>
+                    <path d="M 50,5 95,97.5 5,97.5 z"/>
+                  </HatTwo>
+                </ItemSlot>
               </ItemShelf>
             </RightSection>
           </Items>
@@ -40,6 +48,14 @@ class Inventory extends Component {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Inventory)
+
+const HatOne = styled.svg`
+  fill: turquoise;
+`
+
+const HatTwo = styled.svg`
+  fill: red;
+`
 
 const ItemSlot = styled.div`
   width: 7rem;
