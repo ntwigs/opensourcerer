@@ -13,7 +13,6 @@ class Inventory extends Component {
         <InventorySection>
           <Items>
             <LeftSection>
-              {/*<Avatar src={ this.props.state.user.avatarUrl }/>*/}
               <AvatarCanvas />
               <h1>{ this.getUsername() }</h1>
             </LeftSection>
