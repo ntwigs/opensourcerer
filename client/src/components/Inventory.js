@@ -3,12 +3,13 @@ import styled, { keyframes } from 'styled-components'
 import { connect } from 'react-redux'
 import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
 import AvatarCanvas from './AvatarCanvas/AvatarCanvas'
+import HatField from './HatField'
 
 class Inventory extends Component {
   getUsername = () => (localStorage.getItem('username'))
 
   setHat = (e, data) => {
-    console.log(e.target['data-hat'])
+    console.log(e.target.src)
   }
 
   getSection = () => {
@@ -23,16 +24,7 @@ class Inventory extends Component {
             <RightSection>
               <TrophyShelf/>
               <ItemShelf>
-                <ItemSlot onClick={ this.setHat }>
-                  <HatOne xmlns="http://www.w3.org/2000/svg" data-hat='one' version="1.1" class="svg-triangle" color="red" width='100' height='100'>
-                    <path d="M 50,5 95,97.5 5,97.5 z"/>
-                  </HatOne>
-                </ItemSlot>
-                <ItemSlot onClick={ this.setHat }>
-                  <HatTwo xmlns="http://www.w3.org/2000/svg" version="1.1" class="svg-triangle" width='100' height='100'>
-                    <path d="M 50,5 95,97.5 5,97.5 z"/>
-                  </HatTwo>
-                </ItemSlot>
+                <HatField hatImageSource={ 'http://vignette4.wikia.nocookie.net/runescape2/images/0/06/Infinity_hat_%28earth%29_detail.png/revision/latest?cb=20131121144217' } />
               </ItemShelf>
             </RightSection>
           </Items>
@@ -48,22 +40,6 @@ class Inventory extends Component {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Inventory)
-
-const HatOne = styled.svg`
-  fill: turquoise;
-`
-
-const HatTwo = styled.svg`
-  fill: red;
-`
-
-const ItemSlot = styled.div`
-  width: 7rem;
-  height: 7rem;
-  border-radius: 2px;
-  background-color: papayawhip;
-  margin: 5px;
-`
 
 const ItemShelf = styled.div`
   width: 100%;
