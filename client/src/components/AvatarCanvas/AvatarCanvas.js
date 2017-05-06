@@ -8,10 +8,11 @@ class AvatarCanvas extends Component {
   componentDidMount = () => {
     this.canvas = this.canvasReference
     this.ctx = this.canvas.getContext('2d')
-    this.hat = new Hat(0, 0, this.ctx)
     this.avatar = new Avatar(0, 0, this.ctx, this.props.state.user.avatarUrl)
     this.width = 500
     this.height = 500
+    this.mx = 0
+    this.my = 0
     this.update()
   }
 
@@ -19,19 +20,49 @@ class AvatarCanvas extends Component {
     this.clear()
     this.avatar.render()
     
+    if (this.props.state.avatarCanvas.hat && !this.props.state.avatarCanvas.isHatRendered) {
+      this.hat = new Hat(0, 0, this.ctx, this.props.state.avatarCanvas.hat)
+      this.props.isHatRendered()
+    }
+
     if (this.hat) {
       this.renderHat()
     }
 
-    requestAnimationFrame(() => this.update())
+    requestAnimationFrame(this.update)
   }
 
-  clear = () => {
-    this.ctx.clearRect(0, 0, this.width, this.height)
+  clear = () => this.ctx.clearRect(0, 0, this.width, this.height)
+
+  renderHat = () => this.hat.render()
+
+  selectHat = e => {
+    this.mx = e.nativeEvent.offsetX - this.hat.x
+    this.my = e.nativeEvent.offsetY - this.hat.y
+
+    if (this.hat && this.isInField()) {
+      this.hat.selected = true
+    }
   }
 
-  renderHat = () => {
-    this.hat.render()
+  deselectHat = () => {
+    this.hat.selected = false
+  }
+
+  // Fix tomorrow -> Wrong area
+  isInField = () => {
+    return this.mx > this.hat.x && this.mx < this.hat.x + this.hat.hat.width && this.my > this.hat.y && this.my < this.hat.y + this.hat.hat.height 
+  }
+
+  moveHat = e => {
+
+    const x = e.nativeEvent.offsetX
+    const y = e.nativeEvent.offsetY
+
+    if (this.hat && this.hat.selected) {
+      this.hat.x = x - this.mx
+      this.hat.y = y - this.my
+    } 
   }
 
   render() {
@@ -40,6 +71,9 @@ class AvatarCanvas extends Component {
         ref={ canvas => this.canvasReference = canvas }
         width={ 500 }
         height={ 500 }
+        onMouseDown={ this.selectHat }
+        onMouseMove={ this.moveHat }
+        onMouseUp={ this.deselectHat }
       />
     )
   }
