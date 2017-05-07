@@ -4,7 +4,11 @@ import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
 import styled, { keyframes } from 'styled-components'
 
 class HatField extends Component {
-  setHat = e => this.props.setHat(e.target.src)
+  setHat = e => {
+    this.props.state.avatarCanvas.hat === e.target.src ?
+      this.props.toggleHatRender() :
+      this.props.setHat(e.target.src) && this.props.toggleHatRender()
+  }
 
   render() {
     console.log(this.props)
