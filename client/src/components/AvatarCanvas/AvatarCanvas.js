@@ -21,7 +21,7 @@ class AvatarCanvas extends Component {
     this.avatar.render()
     
     if (this.props.state.avatarCanvas.hat && this.props.state.avatarCanvas.shouldRenderHat) {
-      this.hat = new Hat(0, 0, this.ctx, this.props.state.avatarCanvas.hat)
+      this.placeHat()
       this.props.toggleHatRender()
     }
 
@@ -30,6 +30,12 @@ class AvatarCanvas extends Component {
     }
 
     requestAnimationFrame(this.update)
+  }
+
+  placeHat = () => {
+    this.hat ?
+      this.hat = new Hat(this.hat.x, this.hat.y, this.ctx, this.props.state.avatarCanvas.hat) : 
+      this.hat = new Hat(0, 0, this.ctx, this.props.state.avatarCanvas.hat)
   }
 
   clear = () => this.ctx.clearRect(0, 0, this.width, this.height)

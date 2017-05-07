@@ -25,6 +25,7 @@ class Inventory extends Component {
               <TrophyShelf/>
               <ItemShelf>
                 <HatField hatImageSource={ 'http://vignette4.wikia.nocookie.net/runescape2/images/0/06/Infinity_hat_%28earth%29_detail.png/revision/latest?cb=20131121144217' } />
+                <HatField hatImageSource={ 'http://vignette3.wikia.nocookie.net/fallout/images/5/5e/Pre-War_hat.png/revision/latest?cb=20110326175739' } />
               </ItemShelf>
             </RightSection>
           </Items>
