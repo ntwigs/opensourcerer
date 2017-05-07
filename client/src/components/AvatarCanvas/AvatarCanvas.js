@@ -20,9 +20,9 @@ class AvatarCanvas extends Component {
     this.clear()
     this.avatar.render()
     
-    if (this.props.state.avatarCanvas.hat && !this.props.state.avatarCanvas.isHatRendered) {
+    if (this.props.state.avatarCanvas.hat && this.props.state.avatarCanvas.shouldRenderHat) {
       this.hat = new Hat(0, 0, this.ctx, this.props.state.avatarCanvas.hat)
-      this.props.isHatRendered()
+      this.props.toggleHatRender()
     }
 
     if (this.hat) {
@@ -37,18 +37,19 @@ class AvatarCanvas extends Component {
   renderHat = () => this.hat.render()
 
   selectHat = e => {
-    this.mx = e.nativeEvent.offsetX - this.hat.x
-    this.my = e.nativeEvent.offsetY - this.hat.y
     const x = e.nativeEvent.offsetX
     const y = e.nativeEvent.offsetY 
 
     if (this.hat && this.isInField(x, y)) {
+      this.mx = e.nativeEvent.offsetX - this.hat.x
+      this.my = e.nativeEvent.offsetY - this.hat.y
       this.hat.selected = true
     }
   }
 
   deselectHat = () => {
-    this.hat.selected = false
+    if (this.hat)
+      this.hat.selected = false
   }
 
   isInField = (x, y) => {

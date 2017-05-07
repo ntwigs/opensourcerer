@@ -1,6 +1,6 @@
 const defaultState = {
   hat: undefined,
-  isHatRendered: false
+  shouldRenderHat: false
 }
 
 export default ((state = defaultState, action) => {
@@ -12,9 +12,9 @@ export default ((state = defaultState, action) => {
 
       return updatedHatState
 
-    case 'IS_HAT_RENDERED':
+    case 'TOGGLE_HAT_RENDER':
       const updatedHatRenderState = Object.assign({}, state, {
-          isHatRendered: !state.isHatRendered
+          shouldRenderHat: !state.shouldRenderHat
       })
 
       return updatedHatRenderState
