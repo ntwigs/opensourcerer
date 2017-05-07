@@ -39,8 +39,10 @@ class AvatarCanvas extends Component {
   selectHat = e => {
     this.mx = e.nativeEvent.offsetX - this.hat.x
     this.my = e.nativeEvent.offsetY - this.hat.y
+    const x = e.nativeEvent.offsetX
+    const y = e.nativeEvent.offsetY 
 
-    if (this.hat && this.isInField()) {
+    if (this.hat && this.isInField(x, y)) {
       this.hat.selected = true
     }
   }
@@ -49,9 +51,8 @@ class AvatarCanvas extends Component {
     this.hat.selected = false
   }
 
-  // Fix tomorrow -> Wrong area
-  isInField = () => {
-    return this.mx > this.hat.x && this.mx < this.hat.x + this.hat.hat.width && this.my > this.hat.y && this.my < this.hat.y + this.hat.hat.height 
+  isInField = (x, y) => {
+    return x > this.hat.x && x < this.hat.x + this.hat.hat.width && y > this.hat.y && y < this.hat.y + this.hat.hat.height 
   }
 
   moveHat = e => {
