@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { mapDispatchToProps, mapStateToProps } from '../../redux/map/map'
 import Hat from './Hat'
+import SaveButton from './SaveButton'
 import Avatar from './Avatar'
 
 class AvatarCanvas extends Component {
@@ -63,7 +64,6 @@ class AvatarCanvas extends Component {
   }
 
   moveHat = e => {
-
     const x = e.nativeEvent.offsetX
     const y = e.nativeEvent.offsetY
 
@@ -73,16 +73,25 @@ class AvatarCanvas extends Component {
     } 
   }
 
+  getSave = () => {
+    if (this.canvasReference) 
+      return <SaveButton canvas={ this.canvasReference } />
+    
+  }
+
   render() {
     return (
-      <canvas
-        ref={ canvas => this.canvasReference = canvas }
-        width={ 500 }
-        height={ 500 }
-        onMouseDown={ this.selectHat }
-        onMouseMove={ this.moveHat }
-        onMouseUp={ this.deselectHat }
-      />
+      <div>
+        <canvas
+          ref={ canvas => this.canvasReference = canvas }
+          width={ 500 }
+          height={ 500 }
+          onMouseDown={ this.selectHat }
+          onMouseMove={ this.moveHat }
+          onMouseUp={ this.deselectHat }
+        />
+        { this.getSave() }
+      </div>
     )
   }
 }
