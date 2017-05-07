@@ -4,6 +4,7 @@ export default class {
     this.y = y
     this.ctx = ctx
     this.avatar = new Image()
+    this.avatar.crossOrigin = 'anonymous'
     this.avatar.src = src
     this.render()
   }
