@@ -6,14 +6,17 @@ import SaveButton from './SaveButton'
 import Avatar from './Avatar'
 
 class AvatarCanvas extends Component {
+  componentWillMount = () => {
+    this.width = 400
+    this.height = 400
+    this.mx = 0
+    this.my = 0
+  }
+
   componentDidMount = () => {
     this.canvas = this.canvasReference
     this.ctx = this.canvas.getContext('2d')
-    this.avatar = new Avatar(0, 0, this.ctx, this.props.state.user.avatarUrl)
-    this.width = 500
-    this.height = 500
-    this.mx = 0
-    this.my = 0
+    this.avatar = new Avatar(0, 0, this.height, this.width, this.ctx, this.props.state.user.avatarUrl)
     this.update()
   }
 
@@ -73,10 +76,15 @@ class AvatarCanvas extends Component {
     } 
   }
 
+  toggleHatTools = () => {
+    if (this.hat)
+      this.hat.displayHatTools = !this.hat.displayHatTools
+    console.log(this.hat.displayHatTools)
+  }
+
   getSave = () => {
     if (this.canvasReference) 
       return <SaveButton canvas={ this.canvasReference } />
-    
   }
 
   render() {
@@ -84,11 +92,13 @@ class AvatarCanvas extends Component {
       <div>
         <canvas
           ref={ canvas => this.canvasReference = canvas }
-          width={ 500 }
-          height={ 500 }
+          width={ this.width }
+          height={ this.height }
           onMouseDown={ this.selectHat }
           onMouseMove={ this.moveHat }
           onMouseUp={ this.deselectHat }
+          onMouseOver={ this.toggleHatTools }
+          onMouseOut={ this.toggleHatTools }
         />
         { this.getSave() }
       </div>
