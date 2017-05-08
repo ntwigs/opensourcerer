@@ -12,6 +12,7 @@ import mainRoute from './routes/mainRoute'
 import authRoute from './routes/authRoute'
 import userRoute from './routes/userRoute'
 import eventsRoute from './routes/eventsRoute'
+import path from 'path'
 
 const app = express()
 const PORT = 3001
@@ -30,6 +31,7 @@ app.use(authRoute)
 app.use(userRoute)
 app.use(mainRoute)
 app.use(eventsRoute)
+app.use('/static', express.static(path.join(__dirname, 'public')))
 
 app.listen(PORT, () => {
     console.log(`Up and running on port : ${ PORT }`)
