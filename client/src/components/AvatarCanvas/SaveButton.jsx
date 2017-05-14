@@ -1,20 +1,27 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { mapDispatchToProps, mapStateToProps } from '../../redux/map/map'
 import styled from 'styled-components'
+import propTypes from 'prop-types'
+import { mapDispatchToProps, mapStateToProps } from '../../redux/map/map'
 
 class SaveButton extends Component {
   saveImage = () => {
-    console.log(this.props.canvas)
     const data = this.props.canvas.toDataURL()
     this.props.avatarUpdate(data)
   }
 
   render() {
     return (
-      <SSaveButton onClick={ this.saveImage }/>
+      <SSaveButton onClick={ this.saveImage } />
     )
   }
+}
+
+SaveButton.propTypes = {
+  avatarUpdate: propTypes.func.isRequired,
+  canvas: {
+    toDataURL: propTypes.func,
+  }.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SaveButton)

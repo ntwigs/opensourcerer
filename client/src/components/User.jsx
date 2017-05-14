@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import Presentation from './Presentation'
 import { connect } from 'react-redux'
-import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
 import styled from 'styled-components'
+import propTypes from 'prop-types'
+import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
+import Presentation from './Presentation'
 import Feed from './Feed'
 import Inventory from './Inventory'
 
@@ -10,36 +11,36 @@ class User extends Component {
   state = {
     userExists: true,
     experience: 0,
-    avatarUrl: ''
+    avatarUrl: '',
   }
-  
+
   setUserDoesNotExists = () => {
     this.setState({
-      userExists: false
+      userExists: false,
     })
   }
 
-  setExperience = experience => {
+  setExperience = ({ experience }) => {
     this.setState({
-      experience
+      experience,
     })
   }
 
-  setAvatar = url => {
+  setAvatar = ({ url }) => {
     this.setState({
-      avatarUrl: url
+      avatarUrl: url,
     })
   }
 
   setText = () => {
     if (this.state.userExists) {
-      return <Presentation 
+      return (<Presentation
         userExists={ this.state.userExists }
         username={ this.props.match.params.username }
         experience={ this.state.experience }
         history={ this.props.history }
         avatarUrl={ this.state.avatarUrl }
-      />
+      />)
     }
     return (<h1>Hey, that name is available for usage!</h1>)
   }
@@ -47,9 +48,9 @@ class User extends Component {
   render() {
     return (
       <MainContainer>
-        <Inventory/>
+        <Inventory />
         { this.setText() }
-        <Feed 
+        <Feed
           setUserDoesNotExists={ this.setUserDoesNotExists }
           username={ this.props.match.params.username }
           experienceGain={ this.setExperience }
@@ -57,6 +58,15 @@ class User extends Component {
       </MainContainer>
     )
   }
+}
+
+User.propTypes = {
+  match: {
+    params: {
+      username: propTypes.string,
+    },
+  }.isRequired,
+  history: propTypes.func.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(User)

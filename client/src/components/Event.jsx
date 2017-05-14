@@ -1,25 +1,36 @@
-import React, { Component } from 'react'
+import React from 'react'
+import propTypes from 'prop-types'
 import styled from 'styled-components'
 
-export default class extends Component {
-  render() {
-    const { name, action, experience, avatar } = this.props.event.events
-    
-    return (
-      <Item>
-        <EventContainer className={ experience >= 150 ? 'large' : 'small' }>
-          <RepoImage alt='repo avatar' src={ avatar }></RepoImage>
-          <TextContainer className='text-container'>
-            <h3>{ name }</h3>
-            <h2>{ action }</h2>
-            <h1>+{ experience }</h1>
-          </TextContainer>
-        </EventContainer>
-      </Item>
-    )
-  }
+const EventComponent = ({ event }) => {
+  const { name, action, experience, avatar } = event.events
+
+  return (
+    <Item>
+      <EventContainer className={ experience >= 150 ? 'large' : 'small' }>
+        <RepoImage alt='repo avatar' src={ avatar } />
+        <TextContainer className='text-container'>
+          <h3>{ name }</h3>
+          <h2>{ action }</h2>
+          <h1>+{ experience }</h1>
+        </TextContainer>
+      </EventContainer>
+    </Item>
+  )
 }
 
+EventComponent.propTypes = {
+  event: {
+    events: {
+      name: propTypes.string,
+      action: propTypes.string,
+      experience: propTypes.string,
+      avatar: propTypes.string,
+    },
+  }.isRequired,
+}
+
+export default EventComponent
 
 const Item = styled.div`
   box-sizing: border-box;

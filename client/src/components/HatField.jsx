@@ -1,17 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
+import propTypes from 'prop-types'
 import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
-import styled, { keyframes } from 'styled-components'
 
 class HatField extends Component {
-  setHat = e => {
+  setHat = ({ e }) => {
     this.props.state.avatarCanvas.hat === e.target.src ?
       this.props.toggleHatRender() :
       this.props.setHat(e.target.src) && this.props.toggleHatRender()
   }
 
   render() {
-    console.log(this.props)
     return (
       <ItemSlot onClick={ this.setHat }>
         <Hat src={ this.props.hatImageSource } />
@@ -20,7 +20,20 @@ class HatField extends Component {
   }
 }
 
+HatField.propTypes = {
+  setHat: propTypes.func.isRequired,
+  toggleHatRender: propTypes.func.isRequired,
+  hatImageSource: propTypes.string.isRequired,
+  state: {
+    avatarCanvas: {
+      src: propTypes.string,
+    },
+  }.isRequired,
+}
+
 export default connect(mapStateToProps, mapDispatchToProps)(HatField)
+
+
 
 const Hat = styled.img`
   height: 90%;

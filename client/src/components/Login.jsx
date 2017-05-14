@@ -1,16 +1,16 @@
 import React, { Component } from 'react'
 import queryString from 'query-string'
+import propTypes from 'prop-types'
 
-export default class extends Component {
+class Login extends Component {
   componentDidMount = () => {
     const { username, token } = queryString.parse(this.props.location.search)
 
     if (username && token) {
       localStorage.setItem('username', username)
       localStorage.setItem('token', token)
-      
       this.props.history.replace({
-        pathname: `/users/${ username }`
+        pathname: `/users/${ username }`,
       })
     }
   }
@@ -21,3 +21,14 @@ export default class extends Component {
     )
   }
 }
+
+Login.propTypes = {
+  location: {
+    search: propTypes.string,
+  }.isRequired,
+  history: {
+    replace: propTypes.func,
+  }.isRequired,
+}
+
+export default Login

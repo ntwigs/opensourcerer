@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
+import propTypes from 'prop-types'
 import styled from 'styled-components'
 
-export default class extends Component {
+class AvatarComponent extends Component {
   logout = () => {
     localStorage.removeItem('username')
     localStorage.removeItem('token')
     this.props.history.replace({
-      pathname: `/`
+      pathname: '/',
     })
   }
 
@@ -16,6 +17,16 @@ export default class extends Component {
     )
   }
 }
+
+
+AvatarComponent.propTypes = {
+  history: ({
+    replace: propTypes.func,
+  }).isRequired,
+  url: propTypes.string.isRequired,
+}
+
+export default AvatarComponent
 
 const Avatar = styled.img`
   width: 100px;

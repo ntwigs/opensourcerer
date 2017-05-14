@@ -1,14 +1,15 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
 import styled from 'styled-components'
+import propTypes from 'prop-types'
+import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
 import Avatar from './Avatar'
 import Backpack from './Backpack'
 import { getUserInformation } from '../lib/http'
 
 class Presentation extends Component {
   state = {
-    username: ''
+    username: '',
   }
 
   componentDidMount = async () => {
@@ -17,17 +18,19 @@ class Presentation extends Component {
     if (user) {
       this.setState({
         username: user.username,
-        experience: user.experience
+        experience: user.experience,
       })
     } else {
       this.setState({
-        username: `${ this.props.username }`
+        username: `${ this.props.username }`,
       })
     }
   }
 
   getExperienceBarWidth = () => {
-    return this.props.state.user.experience / (this.props.state.user.level * 2000) * 100
+    const percentage = (this.props.state.user.level * 2000) * 100
+    const experience = this.props.state.user.experience
+    return experience / percentage
   }
 
   render() {
@@ -37,21 +40,34 @@ class Presentation extends Component {
       <Header>
         <div>
           <Avatar url={ avatarUrl } history={ this.props.history } />
-          <Backpack></Backpack>
+          <Backpack />
         </div>
         <h1>{ this.state.username }</h1>
         <h5>{ title }</h5>
         <ExperienceBarContainer>
           <h5>{ level }</h5>
-            <ExperienceBar>
-              <ExperiencePercentage  percentage={ this.getExperienceBarWidth }></ExperiencePercentage>
-            </ExperienceBar>
+          <ExperienceBar>
+            <ExperiencePercentage percentage={ this.getExperienceBarWidth } />
+          </ExperienceBar>
           <h5>{ level + 1 }</h5>
         </ExperienceBarContainer>
         <h3>Experience: { experience }</h3>
       </Header>
     )
   }
+}
+
+Presentation.propTypes = {
+  state: {
+    user: {
+      level: propTypes.number,
+      experience: propTypes.number,
+      title: propTypes.string,
+      avatarUrl: propTypes.string,
+    },
+  }.isRequired,
+  history: propTypes.func.isRequired,
+  username: propTypes.string.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Presentation)

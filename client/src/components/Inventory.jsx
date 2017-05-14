@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled, { keyframes } from 'styled-components'
+import propTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
 import AvatarCanvas from './AvatarCanvas/AvatarCanvas'
@@ -7,10 +8,6 @@ import HatField from './HatField'
 
 class Inventory extends Component {
   getUsername = () => (localStorage.getItem('username'))
-
-  setHat = (e, data) => {
-    console.log(e.target.src)
-  }
 
   getSection = () => {
     if (this.props.state.inventory.open) {
@@ -22,9 +19,9 @@ class Inventory extends Component {
               <h1>{ this.getUsername() }</h1>
             </LeftSection>
             <RightSection>
-              <TrophyShelf/>
+              <TrophyShelf />
               <ItemShelf>
-                <HatField hatImageSource={ 'http://vignette4.wikia.nocookie.net/runescape2/images/0/06/Infinity_hat_%28earth%29_detail.png/revision/latest?cb=20131121144217' } />
+                <HatField hatImageSource={ 'http://localhost:3001/static/hats/0.png' } />
                 <HatField hatImageSource={ 'http://vignette3.wikia.nocookie.net/fallout/images/5/5e/Pre-War_hat.png/revision/latest?cb=20110326175739' } />
               </ItemShelf>
             </RightSection>
@@ -32,12 +29,20 @@ class Inventory extends Component {
         </InventorySection>
       )
     }
-    return <div/> 
+    return <div />
   }
 
   render() {
     return this.getSection()
   }
+}
+
+Inventory.propTypes = {
+  state: {
+    inventory: {
+      open: propTypes.bool.isRequired,
+    },
+  }.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Inventory)

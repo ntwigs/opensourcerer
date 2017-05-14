@@ -33,7 +33,7 @@ class AvatarCanvas extends Component {
       this.renderHat()
     }
 
-    requestAnimationFrame(this.update)
+     (this.update)
   }
 
   placeHat = () => {
@@ -83,7 +83,7 @@ class AvatarCanvas extends Component {
   }
 
   getSave = () => {
-    if (this.canvasReference) 
+    if (this.canvasReference)
       return <SaveButton canvas={ this.canvasReference } />
   }
 
@@ -105,5 +105,3 @@ class AvatarCanvas extends Component {
     )
   }
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(AvatarCanvas)

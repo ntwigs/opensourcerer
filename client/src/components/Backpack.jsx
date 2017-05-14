@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import propTypes from 'prop-types'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
@@ -9,7 +10,7 @@ class Backpack extends Component {
     try {
       const inventory = await getInventory()
       this.props.openInventory(inventory)
-    } catch(error) {
+    } catch (error) {
       console.log(error)
     }
   }
@@ -19,6 +20,10 @@ class Backpack extends Component {
       <BackpackIcon onClick={ this.openInventory } />
     )
   }
+}
+
+Backpack.propTypes = {
+  openInventory: propTypes.func.isRequired,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Backpack)

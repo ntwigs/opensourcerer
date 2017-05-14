@@ -3,9 +3,16 @@
   "version": "0.0.1",
   "private": true,
   "devDependencies": {
+    "airbnb-eslint": "git+https://git@github.com/NorthernTwig/javascript.git",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.3",
     "react-scripts": "0.9.5"
   },
   "dependencies": {
+    "prop-types": "^15.5.10",
     "query-string": "^4.3.2",
     "react": "^15.4.2",
     "react-dom": "^15.5.4",
