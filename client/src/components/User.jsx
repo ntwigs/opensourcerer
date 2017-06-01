@@ -20,7 +20,7 @@ class User extends Component {
     })
   }
 
-  setExperience = ({ experience }) => {
+  setExperience = (experience) => {
     this.setState({
       experience,
     })

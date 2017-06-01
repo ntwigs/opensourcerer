@@ -46,7 +46,7 @@ class Feed extends Component {
     }
   }
 
-  fetchInitialEvents = async ({ etag }) => {
+  fetchInitialEvents = async (etag) => {
     try {
       const events = await getInitialEvents(this.props.username)
 
@@ -64,7 +64,7 @@ class Feed extends Component {
     }
   }
 
-  fetchNewEvents = async ({ etag }) => {
+  fetchNewEvents = async (etag) => {
     try {
       const newEvents = await getNewEvents(this.props.username)
 
@@ -79,7 +79,7 @@ class Feed extends Component {
     }
   }
 
-  restart = ({ error }) => {
+  restart = (error) => {
     const timeUntilRequest = error ?
       error.response.headers['x-ratelimit-reset'] :
       this.POLL_TIME
@@ -89,13 +89,13 @@ class Feed extends Component {
     }, timeUntilRequest)
   }
 
-  timeLeft = ({ time }) => {
+  timeLeft = (time) => {
     const until = new Date(time * 1000).getTime() // To milliseconds
     const current = new Date().getTime()
     return until - current
   }
 
-  displayEvents = () => this.state.events.map(({ event }) => (
+  displayEvents = () => this.state.events.map(event => (
     <Event key={ event.id } event={ event } />
   ))
 

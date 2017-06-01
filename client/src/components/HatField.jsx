@@ -5,7 +5,7 @@ import propTypes from 'prop-types'
 import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
 
 class HatField extends Component {
-  setHat = ({ e }) => {
+  setHat = (e) => {
     this.props.state.avatarCanvas.hat === e.target.src ?
       this.props.toggleHatRender() :
       this.props.setHat(e.target.src) && this.props.toggleHatRender()
