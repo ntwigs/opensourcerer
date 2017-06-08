@@ -1,18 +1,23 @@
 import React from 'react'
 import propTypes from 'prop-types'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const EventComponent = ({ event }) => {
-  const { name, action, experience, avatar } = event.events
+  const { name, action, experience, avatar, url } = event.events
 
   return (
     <Item>
       <EventContainer className={ experience >= 150 ? 'large' : 'small' }>
-        <RepoImage alt='repo avatar' src={ avatar } />
+        <Link to={ name }>
+          <RepoImage alt='repo avatar' src={ avatar } />
+        </Link>
         <TextContainer className='text-container'>
-          <h3>{ name }</h3>
-          <h2>{ action }</h2>
-          <h1>+{ experience }</h1>
+          <a href={ url } rel='noopener noreferrer' target='_blank'>
+            <h3>{ name }</h3>
+            <h2>{ action }</h2>
+            <h1>+{ experience }</h1>
+          </a>
         </TextContainer>
       </EventContainer>
     </Item>
