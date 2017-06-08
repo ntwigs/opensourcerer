@@ -1,6 +1,7 @@
 import rp from 'request-promise'
 
 export default async event => {
+  console.log(event, 'denna')
   try {
     switch(event.type) {
       case 'IssuesEvent':
@@ -8,91 +9,104 @@ export default async event => {
           name: 'Issue',
           action: event.payload.action,
           experience: 125,
-          avatar: await getAvatar(event)
+          avatar: await getAvatar(event),
+          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }` 
         }
       case 'IssueCommentEvent':
         return {
           name: 'Issue Comment',
           action: event.payload.action,
           experience: 75,
-          avatar: await getAvatar(event)
+          avatar: await getAvatar(event),
+          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }` 
         }
       case 'PushEvent':
         return {
           name: 'Push',
           action: 'To Repo',
           experience: 25 * event.payload.commits.length,
-          avatar: await getAvatar(event)         
+          avatar: await getAvatar(event),
+          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }`          
         }
       case 'PublicEvent':
         return {
           name: 'Repo',
           action: 'Public',
           experience: 500,
-          avatar: await getAvatar(event)         
+          avatar: await getAvatar(event),
+          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }`          
         }
       case 'PullRequestEvent':
         return {
           name: 'Pull Request',
           action: event.payload.action,
           experience: 200,
-          avatar: await getAvatar(event)       
+          avatar: await getAvatar(event),
+          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }`        
         }
       case 'ForkEvent': 
         return {
           name: 'Forked',
           action: event.payload.forkee.name,
           experience: 50,
-          avatar: await getAvatar(event) 
+          avatar: await getAvatar(event),
+          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }`  
         }
       case 'PullRequestReviewCommentEvent':
         return {
           name: 'Review Comment',
           action: event.payload.action,
           experience: 75,
-          avatar: await getAvatar(event)         
+          avatar: await getAvatar(event),
+          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }`        
         }
       case 'CreateEvent':
         return {
           name: 'Created',
           action: 'Repo',
           experience: 175,
-          avatar: await getAvatar(event)         
+          avatar: await getAvatar(event),
+          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }`        
         }
       case 'WatchEvent':
         return {
           name: 'Watching',
           action: 'Repo',
           experience: 15,
-          avatar: await getAvatar(event)         
+          avatar: await getAvatar(event),
+          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }` 
         }
       case 'DeleteEvent':
         return {
           name: 'Deleted',
           action: event.payload.ref_type,
           experience: 5,
-          avatar: await getAvatar(event)        
+          avatar: await getAvatar(event),
+          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }`               
         }
       case 'ReleaseEvent':
         return {
           name: 'Released',
           action: 'Repo',
           experience: 150,
-          avatar: await getAvatar(event)
+          avatar: await getAvatar(event),
+          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }`          
         }
       case 'MemberEvent':
         return {
           name: event.payload.member.login,
           action: event.payload.action,
           experience: 25,
-          avatar: await getAvatar(event)
+          avatar: await getAvatar(event),
+          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }`
         }
       case 'GollumEvent':
         return {
           name: 'Wiki',
           action: event.payload.pages[0].action,
           experience: 25,
-          avatar: await getAvatar(event)
+          avatar: await getAvatar(event),
+          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }`
         }
     }
   } catch(error) {
@@ -120,7 +134,7 @@ const getAvatar = async event => {
       if (event.actor.login === repoOwner) {
         return event.actor.avatar_url
       }
-      
+
       return await getRepoAvatar(event.repo.url)
     } else {
       return event.actor.avatar_url
