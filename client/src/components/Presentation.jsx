@@ -38,20 +38,30 @@ class Presentation extends Component {
 
     return (
       <Header>
-        <div>
-          <Avatar url={ avatarUrl } history={ this.props.history } />
-          <Backpack />
-        </div>
-        <h1>{ this.state.username }</h1>
-        <h5>{ title }</h5>
-        <ExperienceBarContainer>
-          <h5>{ level }</h5>
-          <ExperienceBar>
-            <ExperiencePercentage percentage={ this.getExperienceBarWidth } />
-          </ExperienceBar>
-          <h5>{ level + 1 }</h5>
-        </ExperienceBarContainer>
-        <h3>Experience: { experience }</h3>
+        <Card>
+          <Top>
+            <Left>
+              <UserContainer>
+                <Avatar url={ avatarUrl } />
+                <Hat alt='hat' src='http://localhost:3001/static/hats/0.png' />
+              </UserContainer>
+              <TextContainer>
+                <Text big>NorthernTwig</Text>
+                <Text light>{ title }</Text>
+              </TextContainer>
+            </Left>
+            <Right>
+              <Icon className='fa fa-suitcase fa-2x' aria-hidden='true' />
+              <Icon className='fa fa-trophy fa-2x' aria-hidden='true' />
+            </Right>
+          </Top>
+          <Bottom>
+            <Text>Level { level }</Text>
+            <ExperienceBar experience={ experience }>
+              <div />
+            </ExperienceBar>
+          </Bottom>
+        </Card>
       </Header>
     )
   }
@@ -66,7 +76,6 @@ Presentation.propTypes = {
       avatarUrl: propTypes.string,
     },
   }.isRequired,
-  history: propTypes.func.isRequired,
   username: propTypes.string.isRequired,
 }
 
@@ -82,30 +91,94 @@ const Header = styled.header`
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.07), 0 1px 5px 0 rgba(0,0,0,0.06), 0 3px 1px -2px rgba(0,0,0,0.1);
-  padding: 25px 0;
+  padding: 77px 0 10px 0;
   margin-bottom: 10px;
 `
 
-const ExperienceBarContainer = styled.div`
+const Card = styled.div`
+  width: 500px;
+  height: 200px;
+  background-color: #282840;
+  border-radius: 2px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  border-radius: 2px;
+`
+
+const Top = styled.div`
+  height: 100%;
+  width: 100%;
+  display: flex;
+`
+
+const Left = styled.div`
+  display: flex;
   align-items: center;
-  color: white;
-  margin: 10px 0;
+  padding: 20px;
+`
+
+const Right = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 20px;
+  width: 100%;
+  flex-direction: column;
+`
+
+const Text = styled.h6`
+  color: ${ props => props.light ? 'rgba(222, 221, 237, 0.55)' : 'rgba(222, 221, 237, 0.85)' };
+  font-size: ${ props => props.big ? 1.5 : 1 }rem;
+  font-weight: 200;
+`
+
+const TextContainer = styled.div`
+  margin: 10px;
+`
+
+const UserContainer = styled.div`
+  position: relative;
+`
+
+const Hat = styled.img`
+  position: absolute;
+  left: Calc(50% - 50px);
+  bottom: 80px;
+  width: 100px;
+`
+
+const Bottom = styled.div`
+  height: 50%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `
 
 const ExperienceBar = styled.div`
-  height: 10px;
-  width: 200px;
+  width: 90%;
+  height: 7px;
   background-color: #1e202f;
-  margin: 0 10px;
-  border-radius: 10px;
+  border-radius: 2px;
   overflow: hidden;
+  margin-top: 10px;
+
+  & div {
+    width: ${ props => props.experience ? props.experience : 0 }%;
+    height: 100%;
+    background-color: #6a93ff;
+  }
 `
 
-const ExperiencePercentage = styled.div`
-  width: ${ props => props.percentage ? props.percentage : '0' }%;
-  transition: width 1s;
-  height: 100%;
-  background-color: #6a93ff;
+const Icon = styled.i`
+  color: rgba(222, 221, 237, 0.55);
+  transition: all 50ms;
+  margin: 10px;
+  
+  &:hover {
+    color: rgba(222, 221, 237, 0.85);
+    cursor: pointer;
+    transition: all 200ms;
+  }
 `
