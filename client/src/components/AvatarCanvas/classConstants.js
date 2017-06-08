@@ -1,0 +1,6 @@
+export const TOP_LEFT = 'topLeft'
+export const TOP_RIGHT = 'topRight'
+export const BOTTOM_RIGHT = 'bottomRight'
+export const BOTTOM_LEFT = 'bottomLeft'
+export const IMAGE = 'image'
+export const ROTATE = 'rotate'

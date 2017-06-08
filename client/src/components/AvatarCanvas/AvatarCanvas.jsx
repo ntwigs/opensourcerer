@@ -29,11 +29,9 @@ class AvatarCanvas extends Component {
   componentWillReceiveProps = (props) => {
     const { hat, shouldRenderHat } = props.state.avatarCanvas
     if (shouldRenderHat) {
-      console.log('CREATE')
       this.hat = new Hat(this.stage, hat)
       this.hat.render()
     } else {
-      console.log('DESTROY')
       this.hat.destroy()
     }
   }
