@@ -1,5 +1,6 @@
 import Konva from 'konva'
 import Anchor from './Anchor'
+import * as name from './classConstants'
 
 export default class {
   constructor(stage, src) {
@@ -58,11 +59,11 @@ export default class {
 
   createAnchors = () => {
     const anchors = [
-      new Anchor(0, 0, 'topLeft', this.hatLayer, this.hatGroup),
-      new Anchor(this.stage.attrs.width, 0, 'topRight', this.hatLayer, this.hatGroup),
-      new Anchor(this.stage.attrs.width, this.stage.attrs.height, 'bottomRight', this.hatLayer, this.hatGroup),
-      new Anchor(0, this.stage.attrs.height, 'bottomLeft', this.hatLayer, this.hatGroup),
-      new Anchor(this.stage.attrs.width / 2, 0, 'rotate', this.hatLayer, this.hatGroup),
+      new Anchor(0, 0, name.TOP_LEFT, this.hatLayer, this.hatGroup),
+      new Anchor(this.stage.attrs.width, 0, name.TOP_RIGHT, this.hatLayer, this.hatGroup),
+      new Anchor(this.stage.attrs.width, this.stage.attrs.height, name.BOTTOM_RIGHT, this.hatLayer, this.hatGroup),
+      new Anchor(0, this.stage.attrs.height, name.BOTTOM_LEFT, this.hatLayer, this.hatGroup),
+      new Anchor(this.stage.attrs.width / 2, 0, name.ROTATE, this.hatLayer, this.hatGroup),
     ]
 
     anchors.forEach((anchor) => {
