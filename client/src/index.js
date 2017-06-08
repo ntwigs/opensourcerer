@@ -1,11 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Login from './components/Login'
+import 'font-awesome/css/font-awesome.css'
 import styled, { injectGlobal } from 'styled-components'
+import { Provider } from 'react-redux'
+import { BrowserRouter as Router, Route, browserHistory } from 'react-router-dom'
+import Login from './components/Login'
 import User from './components/User'
 import store from './redux/store'
-import { BrowserRouter as Router, Route, browserHistory } from 'react-router-dom'
-import { Provider } from 'react-redux'
 
 const BodyWrapper = styled.div`
   width: 100wv;
@@ -25,7 +26,7 @@ ReactDOM.render(
       </BodyWrapper>
     </Router>
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 )
 
 injectGlobal`

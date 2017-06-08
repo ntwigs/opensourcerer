@@ -22,10 +22,6 @@ const setNew = (events, user) => {
     if (event.repo === undefined)
       return false
 
-    if (!user.events.find(oldEvent => oldEvent.id === event.id)) {
-      return true
-    } else {
-      return false
-    }
+    return !user.events.find(oldEvent => oldEvent.id === event.id)
   })
 }
