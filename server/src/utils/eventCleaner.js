@@ -1,118 +1,126 @@
 import rp from 'request-promise'
 
+// TODO: Fixa användarnamn till porträtt, visningen av länken
+
 export default async event => {
-  console.log(event, 'denna')
+  if (event.payload.pull_request) {
+    console.log(event.payload.pull_request.user)
+  }
   try {
     switch(event.type) {
       case 'IssuesEvent':
-        return {
-          name: 'Issue',
-          action: event.payload.action,
-          experience: 125,
-          avatar: await getAvatar(event),
-          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }` 
-        }
+        return normalizedEvent(
+          event,
+          'Issue',
+          event.payload.action,
+          125,
+        )
       case 'IssueCommentEvent':
-        return {
-          name: 'Issue Comment',
-          action: event.payload.action,
-          experience: 75,
-          avatar: await getAvatar(event),
-          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }` 
-        }
+        return normalizedEvent(
+          event,
+          'Issue Comment',
+          event.payload.action,
+          75,
+        )
       case 'PushEvent':
-        return {
-          name: 'Push',
-          action: 'To Repo',
-          experience: 25 * event.payload.commits.length,
-          avatar: await getAvatar(event),
-          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }`          
-        }
+        return normalizedEvent(
+          event,
+          'Push',
+          'To Repo',
+          25 * event.payload.commits.length,
+        )
       case 'PublicEvent':
-        return {
-          name: 'Repo',
-          action: 'Public',
-          experience: 500,
-          avatar: await getAvatar(event),
-          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }`          
-        }
+        return normalizedEvent(
+          event,
+          'Repo',
+          'Public',
+          500,
+        )
       case 'PullRequestEvent':
-        return {
-          name: 'Pull Request',
-          action: event.payload.action,
-          experience: 200,
-          avatar: await getAvatar(event),
-          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }`        
-        }
+        return normalizedEvent(
+          event,
+          'Pull Request',
+          event.payload.action,
+          200,
+        )
       case 'ForkEvent': 
-        return {
-          name: 'Forked',
-          action: event.payload.forkee.name,
-          experience: 50,
-          avatar: await getAvatar(event),
-          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }`  
-        }
+        return normalizedEvent(
+          event,
+          'Forked',
+          event.payload.forkee.name,
+          50,
+        )
       case 'PullRequestReviewCommentEvent':
-        return {
-          name: 'Review Comment',
-          action: event.payload.action,
-          experience: 75,
-          avatar: await getAvatar(event),
-          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }`        
-        }
+        return normalizedEvent(
+          event,
+          'Review Comment',
+          event.payload.action,
+          75,
+        )
       case 'CreateEvent':
-        return {
-          name: 'Created',
-          action: 'Repo',
-          experience: 175,
-          avatar: await getAvatar(event),
-          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }`        
-        }
+        return normalizedEvent(
+          event,
+          'Created',
+          'Repo',
+          175,
+        )
       case 'WatchEvent':
-        return {
-          name: 'Watching',
-          action: 'Repo',
-          experience: 15,
-          avatar: await getAvatar(event),
-          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }` 
-        }
+        return normalizedEvent(
+          event,
+          'Watching',
+          'Repo',
+          15,
+        )
       case 'DeleteEvent':
-        return {
-          name: 'Deleted',
-          action: event.payload.ref_type,
-          experience: 5,
-          avatar: await getAvatar(event),
-          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }`               
-        }
+        return normalizedEvent(
+          event,
+          'Deleted',
+          event.payload.ref_type,
+          5,
+        )
       case 'ReleaseEvent':
-        return {
-          name: 'Released',
-          action: 'Repo',
-          experience: 150,
-          avatar: await getAvatar(event),
-          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }`          
-        }
+        return normalizedEvent(
+          event,
+          'Released',
+          'Repo',
+          150,
+        )
       case 'MemberEvent':
-        return {
-          name: event.payload.member.login,
-          action: event.payload.action,
-          experience: 25,
-          avatar: await getAvatar(event),
-          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }`
-        }
+        return normalizedEvent(
+          event,
+          event.payload.member.login,
+          event.payload.action,
+          25,
+        )
       case 'GollumEvent':
-        return {
-          name: 'Wiki',
-          action: event.payload.pages[0].action,
-          experience: 25,
-          avatar: await getAvatar(event),
-          url: event.payload.issue ? event.payload.issue.html_url : `https://github.com/${ event.repo.name }`
-        }
+        return normalizedEvent(
+          event,
+          'Wiki',
+          event.payload.pages[0].action,
+          25,
+        )
     }
   } catch(error) {
     console.log(error)
   }
 }
+
+const normalizedEvent = async (event, name, action, experience) => ({
+    name, action, experience,
+    avatar: await getAvatar(event),
+    url: getUrl(event),
+    username: getName(event)
+})
+
+const getUrl = event =>
+  event.payload.issue ?
+    event.payload.issue.html_url :
+    `https://github.com/${ event.repo.name }`
+
+const getName = event => 
+  event.payload.issue ?
+    event.payload.issue.html_url.split('/')[3] :
+    event.repo.name.split('/')[1]
 
 const getAvatar = async event => {
   try {
