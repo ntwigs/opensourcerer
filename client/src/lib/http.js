@@ -1,4 +1,3 @@
-import { FOR_DEV } from '../secret'
 import rp from 'request-promise'
 
 const getToken = () => {
@@ -6,51 +5,52 @@ const getToken = () => {
   return token ? `Bearer ${ token }` : undefined
 }
 
-export const getEtag = async (username, etag) => {
-  return await rp(`https://api.github.com/users/${ username }/events`, {
+export const getEtag = async (username, etag) =>
+  rp(`https://api.github.com/users/${ username }/events`, {
     method: 'HEAD',
     headers: {
-      'If-None-Match': etag
+      'If-None-Match': etag,
     },
     json: true,
-    resolveWithFullResponse: true
+    resolveWithFullResponse: true,
   })
-}
 
-export const getInitialEvents = async username => {
-  return await rp(`http://localhost:3001/events/${ username }`, {
+export const getInitialEvents = async username =>
+  rp(`http://localhost:3001/events/${ username }`, {
     headers: {
-      Authorization: getToken()
+      Authorization: getToken(),
     },
-    json: true
+    json: true,
   })
-}
 
-export const getNewEvents = async username => {
-  return await rp(`http://localhost:3001/users/${ username }/levelup`, {
+export const getNewEvents = async username =>
+  rp(`http://localhost:3001/users/${ username }/levelup`, {
     headers: {
-      Authorization: getToken()
+      Authorization: getToken(),
     },
-    json: true
+    json: true,
   })
-}
 
-export const getUserInformation = async username => {
-  return await rp(`http://localhost:3001/users/${ username }`, {
+export const getUserInformation = async username =>
+  rp(`http://localhost:3001/users/${ username }`, {
     headers: {
-      Authorization: getToken()
+      Authorization: getToken(),
     },
-    json: true
+    json: true,
   })
-}
 
 export const getInventory = async () => {
   const username = localStorage.getItem('username')
-  return await rp(`http://localhost:3001/users/${ username }/inventory`, {
+  return rp(`http://localhost:3001/users/${ username }/inventory`, {
     headers: {
-      Authorization: getToken()
+      Authorization: getToken(),
     },
-    json: true
+    json: true,
   })
 }
+
+export const getLeaderboard = async () =>
+  rp('http://localhost:3001/users/leaderboard', {
+    json: true,
+  })
 

@@ -3,7 +3,6 @@ import styled, { keyframes } from 'styled-components'
 import propTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
-import AvatarCanvas from './AvatarCanvas/AvatarCanvas'
 import HatField from './HatField'
 
 class Inventory extends Component {
@@ -15,7 +14,6 @@ class Inventory extends Component {
         <InventorySection>
           <Items>
             <LeftSection>
-              <AvatarCanvas />
               <h1>{ this.getUsername() }</h1>
             </LeftSection>
             <RightSection>

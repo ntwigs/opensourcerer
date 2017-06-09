@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import propTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
 import Avatar from './Avatar'
 import Backpack from './Backpack'
@@ -52,7 +53,9 @@ class Presentation extends Component {
             </Left>
             <Right>
               <Icon className='fa fa-suitcase fa-2x' aria-hidden='true' />
-              <Icon className='fa fa-trophy fa-2x' aria-hidden='true' />
+              <Link to='/leaderboard'>
+                <Icon className='fa fa-trophy fa-2x' aria-hidden='true' />
+              </Link>
             </Right>
           </Top>
           <Bottom>
