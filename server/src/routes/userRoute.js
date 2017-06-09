@@ -5,7 +5,7 @@ import jwt from 'express-jwt'
 const router = express.Router()
 
 router
-  .get('/users/highscore', async (req, res) => {
+  .get('/users/leaderboard', async (req, res) => {
     const users = await UserSchema.find({}, '-_id username avatar level experience selectedHat selectedTitle')
       .sort({ experience: 1 })
       .limit(10)
