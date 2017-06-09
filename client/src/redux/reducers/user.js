@@ -1,39 +1,37 @@
-const defaultState = {
+const DEFAULT_STATE = {
   experience: 0,
   avatarUrl: '',
   level: 1,
-  title: ''
+  title: '',
+  etag: '',
+  events: [],
+  titles: [],
+  hats: [],
 }
 
-export default ((state = defaultState, action) => {
-  switch(action.type) {
-    case 'EXPERIENCE_UPDATE':
-      const updatedExperienceState = Object.assign({}, state, {
-        experience: action.experience
+export default ((state = DEFAULT_STATE, action) => {
+  switch (action.type) {
+    case 'UPDATE_USER_DATA': {
+      const {
+        experience,
+        level,
+        avatarUrl,
+        organizedEvents,
+        titles,
+      } = action.payload.result
+
+      const updatedUserState = Object.assign({}, state, {
+        experience,
+        level,
+        avatarUrl,
+        titles,
+        title: titles[0],
+        events: organizedEvents,
+        etag: action.payload.etag,
       })
 
-      return updatedExperienceState
-
-    case 'LEVEL_UPDATE':
-      const updateLevelState = Object.assign({}, state, {
-        level: action.level
-      })
-
-      return updateLevelState
-
-    case 'TITLE_UPDATE':
-      const updateTitleState = Object.assign({}, state, {
-        title: action.title
-      })
-
-      return updateTitleState
-
-    case 'AVATAR_UPDATE':
-      const updatedAvatarUrlState = Object.assign({}, state, {
-        avatarUrl: action.avatarUrl
-      })
-
-      return updatedAvatarUrlState
+      return updatedUserState
+    }
     default:
       return state
   }
