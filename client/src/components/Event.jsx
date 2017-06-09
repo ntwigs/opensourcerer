@@ -4,12 +4,12 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 const EventComponent = ({ event }) => {
-  const { name, action, experience, avatar, url } = event.events
+  const { name, action, experience, avatar, url, username } = event.events
 
   return (
     <Item>
       <EventContainer className={ experience >= 150 ? 'large' : 'small' }>
-        <Link to={ name }>
+        <Link to={ username }>
           <RepoImage alt='repo avatar' src={ avatar } />
         </Link>
         <TextContainer className='text-container'>

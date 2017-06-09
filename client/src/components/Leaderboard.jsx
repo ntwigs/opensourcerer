@@ -1,49 +1,44 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import { getLeaderboard } from '../lib/http'
+import { connect } from 'react-redux'
+import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
 
-export default class extends Component {
-  state = {
-    users: [],
-  }
-
-  componentDidMount = async () => {
-    const leaderboard = await getLeaderboard()
-      .catch(e => console.log(e))
-
-    this.setState({
-      users: leaderboard,
-    })
+class Leaderboard extends Component {
+  componentDidMount = () => {
+    this.props.setLeaderboard()
   }
 
 
-  getLeaderboard = () =>
-    this.state.users.map((user, index) => (
-      <PlaceContainer>
-        <h1>{ index + 1 }</h1>
-        <ContentContainer>
-          <Section>
-            <img alt='avatar' src={ user.avatar } />
-            <h5>{ user.username }</h5>
-            <p>I have issues</p>
-          </Section>
-          <Section>
-            <p>{ `Level ${ user.level }` }</p>
-            <p>{ `Experience ${ user.experience }` }</p>
-          </Section>
-        </ContentContainer>
-      </PlaceContainer>
-    ))
+  getLeaderboard = (user, index) =>
+    <PlaceContainer>
+      <h1>{ index + 1 }</h1>
+      <ContentContainer>
+        <Section>
+          <img alt='avatar' src={ user.avatar } />
+          <h5>{ user.username }</h5>
+          <p>I have issues</p>
+        </Section>
+        <Section>
+          <p>{ `Level ${ user.level }` }</p>
+          <p>{ `Experience ${ user.experience }` }</p>
+        </Section>
+      </ContentContainer>
+    </PlaceContainer>
 
   render() {
+    const { positions } = this.props.state.leaderboard
+    console.log(this.props, 'HÄÄÄR')
     return (
       <MainContainer>
         <h1>Leaderboard</h1>
-        { this.getLeaderboard() }
+        { positions.map(this.getLeaderboard) }
       </MainContainer>
     )
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Leaderboard)
+
 
 const MainContainer = styled.div`
   width: 100vw;

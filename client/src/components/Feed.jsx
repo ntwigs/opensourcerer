@@ -47,21 +47,8 @@ class Feed extends Component {
   }
 
   fetchInitialEvents = async (etag) => {
-    try {
-      const events = await getInitialEvents(this.props.username)
-
-      this.setState({
-        events: events.organizedEvents,
-        etag,
-      })
-
-      this.props.experienceUpdate(events.experience)
-      this.props.titleUpdate(events.titles)
-      this.props.levelUpdate(events.level)
-      this.props.avatarUpdate(events.avatarUrl)
-    } catch (error) {
-      console.log(error)
-    }
+    await this.props.updateUserData(this.props.username, etag)
+      .catch(e => console.log(e))
   }
 
   fetchNewEvents = async (etag) => {
