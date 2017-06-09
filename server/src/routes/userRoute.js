@@ -5,6 +5,14 @@ import jwt from 'express-jwt'
 const router = express.Router()
 
 router
+  .get('/users/highscore', async (req, res) => {
+    const users = await UserSchema.find({}, '-_id username avatar level experience selectedHat selectedTitle')
+      .sort({ experience: 1 })
+      .limit(10)
+      .catch(e => console.log(e))
+
+    res.json(users)
+  })
   .get('/users/:username', async (req, res) => {
     try {
       const { username } = req.params
