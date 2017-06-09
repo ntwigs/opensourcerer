@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom'
 import 'font-awesome/css/font-awesome.css'
 import styled, { injectGlobal } from 'styled-components'
 import { Provider } from 'react-redux'
-import { BrowserRouter as Router, Route, browserHistory } from 'react-router-dom'
+import { BrowserRouter as Router, Route, browserHistory, Switch } from 'react-router-dom'
+import { RouteTransition } from 'react-router-transition'
 import Login from './components/Login'
 import User from './components/User'
+import Leaderboard from './components/Leaderboard'
 import store from './redux/store'
 
 const BodyWrapper = styled.div`
@@ -21,8 +23,22 @@ ReactDOM.render(
   <Provider store={ store }>
     <Router histrory={ browserHistory }>
       <BodyWrapper>
-        <Route exact path='/' component={ Login } />
-        <Route path='/users/:username' component={ User } />
+        <Route
+          render={ ({ location }) =>
+            <RouteTransition
+              pathname={ location.pathname }
+              atEnter={ { opacity: 0 } }
+              atLeave={ { opacity: 0 } }
+              atActive={ { opacity: 1 } }
+            >
+              <Switch key={ location.key } location={ location }>
+                <Route exact path='/' component={ Login } />
+                <Route path='/users/:username' component={ User } />
+                <Route path='/leaderboard' component={ Leaderboard } />
+              </Switch>
+            </RouteTransition>
+          }
+        />
       </BodyWrapper>
     </Router>
   </Provider>,
