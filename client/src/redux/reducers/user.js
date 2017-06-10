@@ -32,6 +32,15 @@ export default ((state = DEFAULT_STATE, action) => {
 
       return updatedUserState
     }
+    case 'USER_LEVELUP': {
+      const updatedUserState = Object.assign({}, state, {
+        etag: action.payload.etag,
+        events: [...this.action.payload.events, ...state.events],
+        experience: this.action.payload.experience,
+      })
+
+      return updatedUserState
+    }
     default:
       return state
   }
