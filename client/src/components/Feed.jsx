@@ -82,14 +82,15 @@ class Feed extends Component {
     return until - current
   }
 
-  displayEvents = () => this.state.events.map(event => (
-    <Event key={ event.id } event={ event } />
-  ))
+  displayEvents = ({ events, id }) => {
+    console.log(events, 'kingen')
+    return <Event key={ id } event={ events } />
+  }
 
   render() {
     return (
       <EventsWrapper>
-        { this.displayEvents() }
+        { this.props.state.user.events.map(this.displayEvents) }
       </EventsWrapper>
     )
   }
