@@ -22,14 +22,16 @@ class Feed extends Component {
       const userHeader = await getEtag(this.props.username, this.state.etag)
       const { etag } = userHeader.headers
 
-      if (this.state.etag === undefined) {
+      console.log(this.props.state.user.etag.length)
+
+      if (this.props.state.user.etag.length > 0) {
         await this.fetchInitialEvents(etag)
         if (this.props.state.user.level !== 0) {
           await this.fetchNewEvents(etag)
         }
       }
 
-      if (etag !== this.state.etag) {
+      if (etag !== this.props.state.user.etag) {
         await this.fetchNewEvents(etag)
       }
 
@@ -53,14 +55,15 @@ class Feed extends Component {
 
   fetchNewEvents = async (etag) => {
     try {
-      const newEvents = await getNewEvents(this.props.username)
+      await this.props.userLevelup(this.props.state.user.username, etag)
+        .catch(e => console.log(e))
 
-      this.setState({
-        events: [...newEvents.newEvents, ...this.state.events],
-        etag,
-      })
+      // this.setState({
+      //   events: [...newEvents.newEvents, ...this.state.events],
+      //   etag,
+      // })
 
-      this.props.experienceUpdate(newEvents.experience)
+      // this.props.experienceUpdate(newEvents.experience)
     } catch (error) {
       console.log(error)
     }
@@ -83,7 +86,6 @@ class Feed extends Component {
   }
 
   displayEvents = ({ events, id }) => {
-    console.log(events, 'kingen')
     return <Event key={ id } event={ events } />
   }
 

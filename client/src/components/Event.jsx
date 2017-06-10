@@ -3,8 +3,8 @@ import propTypes from 'prop-types'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-const EventComponent = ({ event }) => {
-  const { name, action, experience, avatar, url, username } = event.events
+const EventComponent = (event) => {
+  const { name, action, experience, avatar, url, username } = event
 
   return (
     <Item>
