@@ -49,7 +49,9 @@ router
         username: user.username
       }, updatedUserObject)
 
-      res.json(newEvents)
+      console.log(updatedUserObject)
+
+      res.json(updatedUserObject)
     } catch(error) {
       console.log(error)
     }

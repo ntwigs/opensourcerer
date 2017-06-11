@@ -21,12 +21,9 @@ class Feed extends Component {
     try {
       const userHeader = await getEtag(this.props.state.user.username, this.props.state.user.etag)
       const { etag } = userHeader.headers
-      
+
       if (this.props.state.user.etag.length === 0) {
         await this.fetchInitialEvents(etag)
-        if (this.props.state.user.level !== 0) {
-          await this.fetchNewEvents(etag)
-        }
       }
 
       if (etag !== this.props.state.user.etag) {
