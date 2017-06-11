@@ -35,7 +35,7 @@ class Presentation extends Component {
   }
 
   render() {
-    const { avatarUrl, experience, level, title } = this.props.state.user
+    const { avatarUrl, experience, level, title, username } = this.props.state.user
 
     return (
       <Header>
@@ -47,7 +47,7 @@ class Presentation extends Component {
                 <Hat alt='hat' src='http://localhost:3001/static/hats/0.png' />
               </UserContainer>
               <TextContainer>
-                <Text big>NorthernTwig</Text>
+                <Text big>{ username }</Text>
                 <Text light>{ title }</Text>
               </TextContainer>
             </Left>

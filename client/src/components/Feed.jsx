@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import propTypes from 'prop-types'
 import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
 import Event from './Event'
-import { getEtag, getNewEvents, getInitialEvents } from '../lib/http'
+import { getEtag } from '../lib/http'
 
 class Feed extends Component {
   state = {
@@ -19,12 +19,10 @@ class Feed extends Component {
 
   refreshEvents = async () => {
     try {
-      const userHeader = await getEtag(this.props.username, this.state.etag)
+      const userHeader = await getEtag(this.props.state.user.username, this.props.state.user.etag)
       const { etag } = userHeader.headers
-
-      console.log(this.props.state.user.etag.length)
-
-      if (this.props.state.user.etag.length > 0) {
+      
+      if (this.props.state.user.etag.length === 0) {
         await this.fetchInitialEvents(etag)
         if (this.props.state.user.level !== 0) {
           await this.fetchNewEvents(etag)
@@ -54,19 +52,8 @@ class Feed extends Component {
   }
 
   fetchNewEvents = async (etag) => {
-    try {
-      await this.props.userLevelup(this.props.state.user.username, etag)
-        .catch(e => console.log(e))
-
-      // this.setState({
-      //   events: [...newEvents.newEvents, ...this.state.events],
-      //   etag,
-      // })
-
-      // this.props.experienceUpdate(newEvents.experience)
-    } catch (error) {
-      console.log(error)
-    }
+    await this.props.userLevelup(this.props.state.user.username, etag)
+      .catch(e => console.log(e))
   }
 
   restart = (error) => {
@@ -90,9 +77,11 @@ class Feed extends Component {
   }
 
   render() {
+    const { events } = this.props.state.user
+
     return (
       <EventsWrapper>
-        { this.props.state.user.events.map(this.displayEvents) }
+        { events.map(this.displayEvents) }
       </EventsWrapper>
     )
   }

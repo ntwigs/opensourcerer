@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 const EventComponent = (event) => {
-  const { name, action, experience, avatar, url, username } = event
+  const { name, action, experience, avatar, url, username } = event.event
 
   return (
     <Item>

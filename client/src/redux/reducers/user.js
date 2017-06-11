@@ -1,7 +1,7 @@
 const DEFAULT_STATE = {
   experience: 0,
   avatarUrl: '',
-  level: 1,
+  level: 0,
   title: '',
   etag: '',
   events: [],
@@ -33,10 +33,15 @@ export default ((state = DEFAULT_STATE, action) => {
       return updatedUserState
     }
     case 'USER_LEVELUP': {
+      const {
+        experience,
+        events,
+      } = action.payload.result
+
       const updatedUserState = Object.assign({}, state, {
         etag: action.payload.etag,
-        events: [...this.action.payload.events, ...state.events],
-        experience: this.action.payload.experience,
+        events: [...events, ...state.events],
+        experience,
       })
 
       return updatedUserState
