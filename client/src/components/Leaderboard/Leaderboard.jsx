@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
+import { mapDispatchToProps, mapStateToProps } from '../../redux/map/map'
 
 class Leaderboard extends Component {
   componentDidMount = () => {
     this.props.setLeaderboard()
   }
-
 
   getLeaderboard = (user, index) =>
     <PlaceContainer>
@@ -27,7 +26,7 @@ class Leaderboard extends Component {
 
   render() {
     const { positions } = this.props.state.leaderboard
-    console.log(this.props, 'HÄÄÄR')
+
     return (
       <MainContainer>
         <h1>Leaderboard</h1>

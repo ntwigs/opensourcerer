@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import propTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
+import { mapDispatchToProps, mapStateToProps } from '../../redux/map/map'
 import Avatar from './Avatar'
 import Backpack from './Backpack'
-import { getUserInformation } from '../lib/http'
+import { getUserInformation } from '../../lib/http'
 
 class Presentation extends Component {
   state = {
@@ -35,7 +35,7 @@ class Presentation extends Component {
   }
 
   render() {
-    const { avatarUrl, experience, level, title, username } = this.props.state.user
+    const { avatarUrl, experience, level, title } = this.props.state.user
 
     return (
       <Header>
@@ -47,7 +47,7 @@ class Presentation extends Component {
                 <Hat alt='hat' src='http://localhost:3001/static/hats/0.png' />
               </UserContainer>
               <TextContainer>
-                <Text big>{ username }</Text>
+                <Text big>{ this.props.username }</Text>
                 <Text light>{ title }</Text>
               </TextContainer>
             </Left>

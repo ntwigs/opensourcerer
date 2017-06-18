@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import propTypes from 'prop-types'
-import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
+import { mapDispatchToProps, mapStateToProps } from '../../redux/map/map'
 import Event from './Event'
-import { getEtag } from '../lib/http'
+import { getEtag } from '../../lib/http'
+import { joinRoom, leaveRoom } from '../../lib/connect'
 
 class Feed extends Component {
   state = {
@@ -12,14 +13,23 @@ class Feed extends Component {
     etag: undefined,
   }
 
+  componentWillMount = () => {
+    joinRoom()
+  }
+
+
   componentDidMount = () => {
     this.POLL_TIME = 10000 // How often to poll GitHub
     this.refreshEvents()
   }
 
+  componentWillUnmount = () => {
+    leaveRoom()
+  }
+
   refreshEvents = async () => {
     try {
-      const userHeader = await getEtag(this.props.state.user.username, this.props.state.user.etag)
+      const userHeader = await getEtag(this.props.username, this.props.state.user.etag)
       const { etag } = userHeader.headers
 
       if (this.props.state.user.etag.length === 0) {

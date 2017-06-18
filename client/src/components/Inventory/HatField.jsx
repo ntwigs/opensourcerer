@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import propTypes from 'prop-types'
-import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
+import { mapDispatchToProps, mapStateToProps } from '../../redux/map/map'
 
 class HatField extends Component {
   setHat = (e) => {

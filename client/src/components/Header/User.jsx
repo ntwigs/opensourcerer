@@ -2,16 +2,21 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import propTypes from 'prop-types'
-import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
+import { mapDispatchToProps, mapStateToProps } from '../../redux/map/map'
 import Presentation from './Presentation'
-import Feed from './Feed'
-import Inventory from './Inventory'
+import Feed from '../Feed/Feed'
+import Inventory from '../Inventory/Inventory'
+import { socketConnection } from '../../lib/connect'
 
 class User extends Component {
   state = {
     userExists: true,
     experience: 0,
     avatarUrl: '',
+  }
+
+  componentWillMount = () => {
+    socketConnection()
   }
 
   setUserDoesNotExists = () => {

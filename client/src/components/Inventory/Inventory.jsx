@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled, { keyframes } from 'styled-components'
 import propTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { mapDispatchToProps, mapStateToProps } from '../redux/map/map'
+import { mapDispatchToProps, mapStateToProps } from '../../redux/map/map'
 import HatField from './HatField'
 
 class Inventory extends Component {
@@ -18,10 +18,7 @@ class Inventory extends Component {
             </LeftSection>
             <RightSection>
               <TrophyShelf />
-              <ItemShelf>
-                <HatField hatImageSource={ 'http://localhost:3001/static/hats/0.png' } />
-                <HatField hatImageSource={ 'http://vignette3.wikia.nocookie.net/fallout/images/5/5e/Pre-War_hat.png/revision/latest?cb=20110326175739' } />
-              </ItemShelf>
+              <ItemShelf />
             </RightSection>
           </Items>
         </InventorySection>
