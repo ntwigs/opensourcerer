@@ -3,7 +3,6 @@ const DEFAULT_STATE = {
   avatarUrl: '',
   level: 0,
   title: '',
-  etag: '',
   events: [],
   titles: [],
   hats: [],
@@ -18,7 +17,7 @@ export default ((state = DEFAULT_STATE, action) => {
         avatarUrl,
         organizedEvents,
         titles,
-      } = action.payload.result
+      } = action.userData
 
       const updatedUserState = Object.assign({}, state, {
         experience,
@@ -27,7 +26,6 @@ export default ((state = DEFAULT_STATE, action) => {
         titles,
         title: titles[0],
         events: organizedEvents,
-        etag: action.payload.etag,
       })
 
       return updatedUserState
@@ -39,7 +37,6 @@ export default ((state = DEFAULT_STATE, action) => {
       } = action.payload.result
 
       const updatedUserState = Object.assign({}, state, {
-        etag: action.payload.etag,
         events: [...events, ...state.events],
         experience,
       })

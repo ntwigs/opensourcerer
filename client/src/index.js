@@ -5,9 +5,9 @@ import styled, { injectGlobal } from 'styled-components'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route, browserHistory, Switch } from 'react-router-dom'
 import { RouteTransition } from 'react-router-transition'
-import Login from './components/Login'
-import User from './components/User'
-import Leaderboard from './components/Leaderboard'
+import Login from './components/Login/Login'
+import User from './components/Header/User'
+import Leaderboard from './components/Leaderboard/Leaderboard'
 import store from './redux/store'
 
 const BodyWrapper = styled.div`
@@ -62,5 +62,3 @@ injectGlobal`
     font-family: 'Rubik Mono One', sans-serif;
   }
 `
-
-

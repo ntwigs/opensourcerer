@@ -4,47 +4,47 @@ export default mongoose.model('UserSchema', mongoose.Schema({
   username: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   avatar: {
     type: String,
-    required: true
+    required: true,
   },
   experience: {
     type: Number,
     required: true,
-    default: 0
+    default: 0,
   },
   level: {
     type: Number,
     required: true,
-    default: 1
+    default: 1,
   },
   titles: {
     type: Array,
     required: true,
-    default: ['Noob']
+    default: ['Noob'],
   },
   hats: {
     type: Array,
-    default: []
+    default: [],
   },
   trophies: {
     type: Array,
-    default: []
+    default: [],
   },
   events: {
     type: Array,
     required: true,
-    default: []  
+    default: [],
   },
   accessToken: {
     type: String,
-    required: true
+    required: true,
   },
   date: {
     type: Date,
     default: Date.now,
-    required: true
-  }
+    required: true,
+  },
 }))

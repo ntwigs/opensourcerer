@@ -1,7 +1,7 @@
 import { Strategy as GitHubStrategy } from 'passport-github'
+import passport from 'passport'
 import rp from 'request-promise'
 import UserSchema from '../schemas/UserSchema'
-import passport from 'passport'
 import eventCleaner from './eventCleaner'
 import levelCheck from './levelCheck'
 
@@ -16,7 +16,7 @@ passport.deserializeUser((user, done) => {
 passport.use(new GitHubStrategy({
   clientID: process.env.CLIENT_ID,
   clientSecret: process.env.CLIENT_SECRET,
-  callbackURL: 'http://localhost:3001/login/callback'
+  callbackURL: 'http://localhost:3001/login/callback',
 }, async (accessToken, refreshToken, profile, done) => {
   try {
     if (!profile) throw new Error('No profile!')
@@ -29,12 +29,12 @@ passport.use(new GitHubStrategy({
         method: 'GET',
         headers: {
           Authorization: `Bearer ${ accessToken }`,
-          'User-Agent': 'OpenSourcerer'
+          'User-Agent': 'OpenSourcerer',
         },
-        json: true
+        json: true,
       })
 
-      const eventArray = await Promise.all(events.map(async event => {
+      const eventArray = await Promise.all(events.map(async (event) => {
         const { id, type, repo, created_at } = event
         const eventObject = await eventCleaner(event)
         return {
@@ -42,11 +42,11 @@ passport.use(new GitHubStrategy({
           type,
           events: eventObject,
           repo: repo.name,
-          date: created_at
+          date: created_at,
         }
       }))
 
-      const experience = eventArray.reduce((exp, event) => exp += event.events.experience, 0)
+      const experience = eventArray.reduce((exp, event) => exp + event.events.experience, 0)
       const level = levelCheck(experience)
 
       const userObject = {
@@ -56,18 +56,17 @@ passport.use(new GitHubStrategy({
         avatar: profile._json.avatar_url,
         level,
         titles: 'Noob',
-        accessToken
+        accessToken,
       }
 
       await new UserSchema(userObject).save()
     } else {
       await UserSchema.findOneAndUpdate({ username }, {
-        accessToken
+        accessToken,
       })
     }
 
     done(null, profile)
-
   } catch (error) {
     console.log(error)
   }

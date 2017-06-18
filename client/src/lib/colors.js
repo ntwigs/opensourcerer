@@ -6,4 +6,3 @@ export const BACKGROUND = '#282840'
 export const TEXT_LIGHT = '#DEDDED'
 export const TEXT_DARK = '#1E202F'
 export const TEXT_HIGHLIGHT = '#6A93FF'
-
