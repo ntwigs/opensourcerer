@@ -34,7 +34,7 @@ export default ((state = DEFAULT_STATE, action) => {
       const {
         experience,
         events,
-      } = action.payload.result
+      } = action.newUserData
 
       const updatedUserState = Object.assign({}, state, {
         events: [...events, ...state.events],
